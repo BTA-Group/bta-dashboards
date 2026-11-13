@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MKIK · Közép-Európa Regionális Bizottság</title>
+  <style>
+    :root { --bg:#0b0f14; --card:#151c27; --border:#243044; --text:#e8eef7; --muted:#8b9cb3; --blue:#3b82f6; --green:#22c55e; --amber:#f59e0b; --cyan:#22d3ee; --red:#f87171; }
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:var(--bg);color:var(--text);line-height:1.5;padding:0 20px 60px;max-width:900px;margin:0 auto}
+    header.page{margin:24px 0 24px;padding-bottom:16px;border-bottom:1px solid var(--border)}
+    h1{font-size:1.4rem;font-weight:700}
+    .sub{color:var(--muted);font-size:0.88rem;margin-top:4px}
+    .back{display:inline-block;margin-bottom:12px;color:var(--blue);text-decoration:none;font-size:0.85rem}
+    .status{font-size:0.72rem;font-weight:600;padding:4px 12px;border-radius:999px;background:rgba(248,113,113,0.2);color:var(--red)}
+    .section{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:18px 20px;margin-bottom:16px}
+    .section h2{font-size:0.95rem;font-weight:600;margin-bottom:10px;color:#93c5fd}
+    .section p,.section li{font-size:0.9rem;margin-bottom:8px}
+    .section ul{padding-left:18px}
+    .money-box{border-left:3px solid var(--green);padding-left:14px}
+    .help-box{border-left:3px solid var(--blue);padding-left:14px}
+    .urgent-box{border-left:3px solid var(--red);padding-left:14px;background:rgba(248,113,113,0.06)}
+    .timeline .item{display:flex;gap:12px;padding:8px 0;border-bottom:1px solid var(--border);font-size:0.85rem}
+    .timeline .item:last-child{border-bottom:none}
+    .timeline .date{color:var(--muted);min-width:90px;font-size:0.78rem}
+    footer{margin-top:28px;text-align:center;color:var(--muted);font-size:0.78rem}
+    @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700&display=swap');
+    .bta-nav{position:sticky;top:0;z-index:1000;background:#E2AD01;font-family:'Montserrat',system-ui,sans-serif;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;padding:10px 20px;margin:0 -20px 0;box-shadow:0 2px 12px rgba(0,0,0,0.25)}
+    .bta-nav a{text-decoration:none;color:#1a1a1a}
+    .bta-nav .brand{display:flex;align-items:center;gap:12px;font-weight:700;font-size:0.95rem}
+    .bta-nav .brand img{height:36px}
+    .bta-nav .links{display:flex;flex-wrap:wrap;gap:4px}
+    .bta-nav .links a{font-weight:600;font-size:0.78rem;padding:6px 12px;border-radius:999px}
+    .bta-nav .links a:hover{background:rgba(0,0,0,0.12)}
+    .bta-nav .links a.active{background:rgba(0,0,0,0.18)}
+  </style>
+</head>
+<body>
+  <nav class="bta-nav">
+    <a class="brand" href="https://bta-group.hu/"><img src="https://bta-group.hu/wp-content/uploads/2025/04/logo-3.png" alt="BTA"><span>BTA Dashboards</span></a>
+    <div class="links">
+      <a href="../MAD_Open_Topics_Dashboard.html">MAD</a>
+      <a href="index.html" class="active">MKIK</a>
+      <a href="../../personal/BTA_Personal_Dashboard.html">Personal</a>
+    </div>
+  </nav>
+
+  <header class="page">
+    <a class="back" href="index.html">← MKIK Overview</a>
+    <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:12px;flex-wrap:wrap">
+      <div>
+        <h1>Közép-Európa Regionális Bizottság – 2027 munkaterv</h1>
+        <p class="sub">MKIK · munkaterv + költségterv + H2 beszámoló</p>
+      </div>
+      <span class="status">SÜRGŐS · KGSZB HI: 11.12 12:00</span>
+    </div>
+  </header>
+
+  <div class="section urgent-box">
+    <h2>Aktuális státusz (2026. nov. 11.)</h2>
+    <ul>
+      <li><strong>Holnap 12:00</strong> – KGSZB hivatalos határidő: teljes 2027 munkaterv + költségterv + 2026 H2 beszámoló.</li>
+      <li><strong>Beérkezett inputok:</strong> Pál Antall (Bulgária + Csehország, nov. 8.); Ádám – Gina nov. 10-én köszönte („Szuper!”).</li>
+      <li>Polyák Ágnes: Olaszországban, laptop nélkül – korlátozott válasz (nov. 11.).</li>
+      <li><strong>Nov. 23.</strong> – regionális beszámoló értekezlet.</li>
+    </ul>
+  </div>
+
+  <div class="section">
+    <h2>Összefoglaló – javasolt programok (Pál / Ádám)</h2>
+    <p><strong>Bulgária (Pál):</strong> Autóipar, ipari beszállítók, építőipar. 2027 Q1: 2–3 napos szófiai program (2 kamarai + 2 vállalati). Teljes költség ~1,575 M Ft, ebből MKIK ~1 M Ft. Esetleges dec. 2. AI/üzleti rendezvény + kamarai MoU aláírás (nem része a 2027 keretnek).</p>
+    <p><strong>Csehország (Ádám + Pál):</strong> Ádám: IT / automatizálás; Pál: autóipar, szállítmányozás, finanszírozás. 2027 Q1 (febr–márc): 2 fős, 4 napos Prága–Brno út. Költség ~1,25 M Ft (tolmács nélkül ~1 M Ft).</p>
+    <p><strong>Összesen javasolt kamarai keret 2027-re:</strong> ~2,25 M Ft (előzetes becslés).</p>
+  </div>
+
+  <div class="section help-box">
+    <h2>Hol tudna a BTA Group segíteni?</h2>
+    <ul>
+      <li>Ádám már részt vett a cseh IT/automatizálás stratégiában – folytatás: magyar vállalati igényfelmérés, cseh partnerek előkészítése.</li>
+      <li>Ha a programok megvalósulnak: BTA szakértő / nearshore kompetencia bemutatása CEE partnereknek.</li>
+      <li>Lead-ek a regionális utakból → BSALES opportunity.</li>
+    </ul>
+  </div>
+
+  <div class="section money-box">
+    <h2>Hogyan tudna belőle pénzt szerezni a BTA?</h2>
+    <ul>
+      <li>Közvetett: kapcsolatépítés, későbbi tenderek / ajánlások.</li>
+      <li>Delegáció: napidíj, ha BTA szakértő megy.</li>
+      <li>Potenciál: közepes, stratégiai.</li>
+    </ul>
+  </div>
+
+  <div class="section">
+    <h2>Idővonal</h2>
+    <div class="timeline">
+      <div class="item"><span class="date">2026-10-26</span><span>KGSZB formális kérés (HI: 11.12)</span></div>
+      <div class="item"><span class="date">2026-11-06</span><span>Bernáth: Excel sablon, tagok nov. 11. 16:00-ig; Mikola összesítést kér</span></div>
+      <div class="item"><span class="date">2026-11-08</span><span>Pál: Bulgária + Csehország részletes javaslat + költségek</span></div>
+      <div class="item"><span class="date">2026-11-10</span><span>Gina köszöni Ádám inputját</span></div>
+      <div class="item"><span class="date">2026-11-11</span><span>Polyák Ágnes: korlátozott válasz (Olaszország)</span></div>
+      <div class="item"><span class="date">2026-11-12</span><span><strong>KGSZB határidő 12:00</strong></span></div>
+      <div class="item"><span class="date">2026-11-23</span><span>Regionális beszámoló értekezlet</span></div>
+    </div>
+  </div>
+
+  <footer>MKIK · Közép-Európa · frissítve 2026-11-11</footer>
+</body>
+</html>
