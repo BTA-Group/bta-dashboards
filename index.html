@@ -6,7 +6,7 @@
 <title>BTA Dashboards</title>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700&display=swap" rel="stylesheet">
 <style>
-:root { --gold: #E2AD01; --dark: #1a1a1a; --card: #2d2d2d; --text: #e0e0e0; --muted: #a0a0a0; }
+:root { --gold: #E2AD01; --dark: #1a1a1a; --card: #2d2d2d; --text: #e0e0e0; --muted: #a0a0a0; --err: #f87171; }
 * { box-sizing: border-box; }
 body { margin: 0; font-family: Montserrat, system-ui, sans-serif; background: var(--dark); color: var(--text); min-height: 100vh; }
 nav { background: var(--gold); padding: 0.75rem 1.5rem; display: flex; align-items: center; gap: 1rem; }
@@ -22,9 +22,61 @@ h1 { color: var(--gold); margin: 0 0 0.5rem; }
 .card p { margin: 0; color: var(--muted); font-size: 0.9rem; }
 .badge { display: inline-block; background: #3a7d34; color: #fff; font-size: 0.7rem; padding: 0.15rem 0.5rem; border-radius: 999px; margin-bottom: 0.4rem; font-weight: 600; }
 footer { text-align: center; padding: 2rem; color: var(--muted); font-size: 0.8rem; }
+
+/* Gate */
+#gate {
+  position: fixed; inset: 0; z-index: 9999;
+  background: #0f1419;
+  display: flex; align-items: center; justify-content: center;
+  padding: 1.5rem;
+}
+#gate.hidden { display: none; }
+#app.hidden { display: none; }
+.gate-box {
+  background: var(--card);
+  border: 1px solid #3a4558;
+  border-radius: 14px;
+  padding: 2rem 1.75rem;
+  width: 100%; max-width: 380px;
+  box-shadow: 0 12px 40px rgba(0,0,0,0.45);
+}
+.gate-box .logo-row { display: flex; align-items: center; gap: 12px; margin-bottom: 1.25rem; }
+.gate-box .logo-row img { height: 36px; }
+.gate-box h2 { margin: 0 0 0.35rem; font-size: 1.15rem; color: #fff; }
+.gate-box p { margin: 0 0 1.25rem; color: var(--muted); font-size: 0.88rem; }
+.gate-box input {
+  width: 100%; padding: 0.7rem 0.85rem; border-radius: 8px;
+  border: 1px solid #3a4558; background: #151c27; color: #e8eef7;
+  font-size: 0.95rem; font-family: inherit; margin-bottom: 0.75rem;
+}
+.gate-box input:focus { outline: 2px solid var(--gold); border-color: transparent; }
+.gate-box button {
+  width: 100%; padding: 0.7rem; border: none; border-radius: 8px;
+  background: var(--gold); color: #1a1a1a; font-weight: 700;
+  font-size: 0.95rem; font-family: inherit; cursor: pointer;
+}
+.gate-box button:hover { filter: brightness(1.05); }
+.gate-err { color: var(--err); font-size: 0.82rem; min-height: 1.2em; margin-bottom: 0.5rem; }
 </style>
 </head>
 <body>
+<div id="gate">
+  <div class="gate-box">
+    <div class="logo-row">
+      <img src="https://bta-group.hu/wp-content/uploads/2025/04/logo-3.png" alt="BTA">
+      <strong style="color:#E2AD01">BTA Dashboards</strong>
+    </div>
+    <h2>Internal access</h2>
+    <p>Enter the site password to continue.</p>
+    <div class="gate-err" id="gateErr"></div>
+    <form id="gateForm" autocomplete="off">
+      <input type="password" id="gatePwd" placeholder="Password" autofocus required>
+      <button type="submit">Unlock</button>
+    </form>
+  </div>
+</div>
+
+<div id="app" class="hidden">
 <nav>
   <img src="https://bta-group.hu/wp-content/uploads/2025/04/logo-3.png" alt="BTA">
   <span class="brand">BTA Dashboards</span>
@@ -38,6 +90,11 @@ footer { text-align: center; padding: 2rem; color: var(--muted); font-size: 0.8r
       <h2>MAD Open Topics</h2>
       <p>Active commercial topics from _MAD labeled emails · daily refresh</p>
     </a>
+    <a class="card" href="mad/mkik/index.html">
+      <span class="badge">LIVE</span>
+      <h2>MKIK Projects</h2>
+      <p>Chamber topics · status overview + per-topic analysis</p>
+    </a>
     <a class="card" href="personal/BTA_Personal_Dashboard.html">
       <span class="badge">LIVE</span>
       <h2>Personal Dashboard</h2>
@@ -47,6 +104,11 @@ footer { text-align: center; padding: 2rem; color: var(--muted); font-size: 0.8r
       <span class="badge">LIVE</span>
       <h2>Management Oversight</h2>
       <p>Capacity, risks and account action items</p>
+    </a>
+    <a class="card" href="tracking/BTA_Tracking_Forecast_Dashboard.html">
+      <span class="badge">LIVE</span>
+      <h2>Tracking & Forecast</h2>
+      <p>Booked days, pipeline FTE, benched capacity</p>
     </a>
     <a class="card" href="weekly/Weekly_Activity_Report_Dashboard.html">
       <span class="badge">LIVE</span>
@@ -65,6 +127,40 @@ footer { text-align: center; padding: 2rem; color: var(--muted); font-size: 0.8r
     </a>
   </div>
 </div>
-<footer>Hosted on GitHub Pages · repo: BTA-Group/bta-dashboards</footer>
+<footer>Hosted on GitHub Pages · repo: BTA-Group/bta-dashboards · password-gated entry</footer>
+</div>
+
+<script>
+(function () {
+  var KEY = "bta_dash_ok";
+  var EXPECT = "klapka17_1.em!";
+  var gate = document.getElementById("gate");
+  var app = document.getElementById("app");
+  var err = document.getElementById("gateErr");
+  var form = document.getElementById("gateForm");
+  var input = document.getElementById("gatePwd");
+
+  function unlock() {
+    gate.classList.add("hidden");
+    app.classList.remove("hidden");
+  }
+
+  try {
+    if (sessionStorage.getItem(KEY) === "1") unlock();
+  } catch (e) {}
+
+  form.addEventListener("submit", function (e) {
+    e.preventDefault();
+    if (input.value === EXPECT) {
+      try { sessionStorage.setItem(KEY, "1"); } catch (e) {}
+      err.textContent = "";
+      unlock();
+    } else {
+      err.textContent = "Incorrect password.";
+      input.select();
+    }
+  });
+})();
+</script>
 </body>
 </html>
