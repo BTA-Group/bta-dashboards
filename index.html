@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BTA Dashboards</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+:root { --gold: #E2AD01; --dark: #1a1a1a; --card: #2d2d2d; --text: #e0e0e0; --muted: #a0a0a0; }
+* { box-sizing: border-box; }
+body { margin: 0; font-family: Montserrat, system-ui, sans-serif; background: var(--dark); color: var(--text); min-height: 100vh; }
+nav { background: var(--gold); padding: 0.75rem 1.5rem; display: flex; align-items: center; gap: 1rem; }
+nav img { height: 40px; }
+nav .brand { font-weight: 700; color: #1a1a1a; font-size: 1.15rem; }
+.container { max-width: 900px; margin: 0 auto; padding: 2.5rem 1.5rem; }
+h1 { color: var(--gold); margin: 0 0 0.5rem; }
+.subtitle { color: var(--muted); margin-bottom: 2rem; }
+.grid { display: grid; gap: 1rem; }
+.card { background: var(--card); border-radius: 12px; padding: 1.25rem 1.5rem; border-left: 4px solid var(--gold); text-decoration: none; color: inherit; display: block; transition: transform 0.15s; }
+.card:hover { transform: translateY(-2px); }
+.card h2 { margin: 0 0 0.35rem; font-size: 1.2rem; color: #fff; }
+.card p { margin: 0; color: var(--muted); font-size: 0.9rem; }
+.badge { display: inline-block; background: #3a7d34; color: #fff; font-size: 0.7rem; padding: 0.15rem 0.5rem; border-radius: 999px; margin-bottom: 0.4rem; font-weight: 600; }
+.badge.soon { background: #555; }
+footer { text-align: center; padding: 2rem; color: var(--muted); font-size: 0.8rem; }
+</style>
+</head>
+<body>
+<nav>
+  <img src="https://bta-group.hu/wp-content/uploads/2025/04/logo-3.png" alt="BTA">
+  <span class="brand">BTA Dashboards</span>
+</nav>
+<div class="container">
+  <h1>BTA Dashboards</h1>
+  <p class="subtitle">Static internal dashboards · GitHub Pages · BTA-Group</p>
+  <div class="grid">
+    <a class="card" href="mad/MAD_Open_Topics_Dashboard.html">
+      <span class="badge">LIVE</span>
+      <h2>MAD Open Topics</h2>
+      <p>Active commercial topics from _MAD labeled emails · daily refresh</p>
+    </a>
+    <a class="card" href="personal/BTA_Personal_Dashboard.html">
+      <span class="badge soon">Coming soon</span>
+      <h2>Personal Dashboard</h2>
+      <p>Sales + recruitment overview for Gergácz Bálint</p>
+    </a>
+    <a class="card" href="weekly/Weekly_Activity_Report_Dashboard.html">
+      <span class="badge soon">Coming soon</span>
+      <h2>Weekly Activity</h2>
+      <p>7-day activity summary by topic</p>
+    </a>
+    <a class="card" href="weekly/Weekly_Market_Research_Dashboard.html">
+      <span class="badge soon">Coming soon</span>
+      <h2>Market Research</h2>
+      <p>Opportunities & competitor signals</p>
+    </a>
+    <a class="card" href="stakeholder/BTA_Stakeholder_Spider_Map.html">
+      <span class="badge soon">Coming soon</span>
+      <h2>Stakeholder Spider Map</h2>
+      <p>Contact network & relationship map</p>
+    </a>
+  </div>
+</div>
+<footer>Hosted on GitHub Pages · repo: BTA-Group/bta-dashboards</footer>
+</body>
+</html>
