@@ -6,224 +6,92 @@
 <title>MAD Open Topics Dashboard</title>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700&display=swap" rel="stylesheet">
 <style>
-:root {
-  --gold: #E2AD01;
-  --dark-bg: #1a1a1a;
-  --card-bg: #2d2d2d;
-  --text: #e0e0e0;
-  --muted: #a0a0a0;
-  --accent: #E2AD01;
-  --timeline-line: #444;
-}
+:root { --gold: #E2AD01; --bg: #0f1419; --card: #1a2332; --text: #e8e8e8; --muted: #8b9bb4; --accent: #3d8bfd; }
 * { box-sizing: border-box; }
-body {
-  margin: 0;
-  font-family: 'Montserrat', system-ui, sans-serif;
-  background: var(--dark-bg);
-  color: var(--text);
-  line-height: 1.5;
-}
-nav.top-nav {
-  position: sticky;
-  top: 0;
-  z-index: 100;
-  background: #E2AD01;
-  display: flex;
-  align-items: center;
-  padding: 0.5rem 1.5rem;
-  gap: 1.5rem;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.3);
-}
-nav.top-nav img.logo {
-  height: 40px;
-  width: auto;
-}
-nav.top-nav .brand {
-  font-weight: 700;
-  color: #1a1a1a;
-  text-decoration: none;
-  font-size: 1.1rem;
-}
-nav.top-nav ul {
-  list-style: none;
-  display: flex;
-  gap: 0.5rem;
-  margin: 0;
-  padding: 0;
-  flex-wrap: wrap;
-}
-nav.top-nav a.nav-link {
-  color: #1a1a1a;
-  text-decoration: none;
-  font-weight: 600;
-  padding: 0.4rem 0.9rem;
-  border-radius: 999px;
-  font-size: 0.9rem;
-  transition: background 0.2s;
-}
-nav.top-nav a.nav-link:hover {
-  background: rgba(0,0,0,0.1);
-}
-nav.top-nav a.nav-link.active {
-  background: #1a1a1a;
-  color: #E2AD01;
-}
-header.page-header {
-  padding: 1.5rem 2rem 0.5rem;
-  text-align: center;
-}
-header.page-header h1 {
-  margin: 0 0 0.25rem;
-  font-size: 1.8rem;
-  color: var(--accent);
-}
-header.page-header .generated {
-  color: var(--muted);
-  font-size: 0.85rem;
-}
-.container {
-  max-width: 1100px;
-  margin: 0 auto;
-  padding: 1.5rem;
-}
-.topic-card {
-  background: var(--card-bg);
-  border-radius: 12px;
-  padding: 1.5rem;
-  margin-bottom: 1.5rem;
-  border-left: 4px solid var(--accent);
-  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-}
-.topic-card h2 {
-  margin: 0 0 0.5rem;
-  font-size: 1.35rem;
-  color: #fff;
-}
-.status-badge {
-  display: inline-block;
-  background: #3a7d34;
-  color: #fff;
-  padding: 0.2rem 0.7rem;
-  border-radius: 999px;
-  font-size: 0.8rem;
-  font-weight: 600;
-  margin-bottom: 0.75rem;
-}
-.topic-meta {
-  color: var(--muted);
-  font-size: 0.9rem;
-  margin-bottom: 1rem;
-}
-.timeline {
-  position: relative;
-  padding-left: 1.5rem;
-  border-left: 2px solid var(--timeline-line);
-}
-.timeline-item {
-  position: relative;
-  margin-bottom: 1.25rem;
-}
-.timeline-item::before {
-  content: '';
-  position: absolute;
-  left: -1.65rem;
-  top: 0.35rem;
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-  background: var(--accent);
-  border: 2px solid var(--dark-bg);
-}
-.timeline-item .type {
-  font-size: 0.75rem;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  color: var(--accent);
-  font-weight: 700;
-}
-.timeline-item .date {
-  font-size: 0.8rem;
-  color: var(--muted);
-}
-.timeline-item .content {
-  margin-top: 0.25rem;
-}
-.next-action {
-  background: rgba(226, 173, 1, 0.12);
-  border-radius: 8px;
-  padding: 0.75rem 1rem;
-  margin-top: 1rem;
-  font-weight: 600;
-}
-.empty-state {
-  text-align: center;
-  padding: 3rem 1rem;
-  color: var(--muted);
-}
-footer {
-  text-align: center;
-  padding: 2rem;
-  color: var(--muted);
-  font-size: 0.8rem;
-}
+body { margin: 0; background: var(--bg); color: var(--text); font-family: 'Montserrat', system-ui, sans-serif; }
+.nav { position: sticky; top: 0; z-index: 100; background: var(--gold); display: flex; align-items: center; padding: 8px 16px; gap: 12px; box-shadow: 0 2px 8px rgba(0,0,0,.3); }
+.nav img { height: 32px; }
+.nav a { color: #1a1a1a; text-decoration: none; font-weight: 600; padding: 6px 12px; border-radius: 20px; font-size: 14px; }
+.nav a.active { background: #1a1a1a; color: var(--gold); }
+.nav a:hover:not(.active) { background: rgba(0,0,0,.1); }
+.header { padding: 24px 20px 8px; text-align: center; }
+.header h1 { margin: 0 0 4px; font-size: 28px; color: var(--gold); }
+.header .meta { color: var(--muted); font-size: 13px; }
+.container { max-width: 1100px; margin: 0 auto; padding: 16px; }
+.card { background: var(--card); border-radius: 12px; padding: 20px; margin-bottom: 20px; border-left: 4px solid var(--gold); }
+.card h2 { margin: 0 0 8px; font-size: 20px; color: #fff; }
+.status { display: inline-block; background: #1e3a2f; color: #4ade80; padding: 2px 10px; border-radius: 12px; font-size: 12px; font-weight: 600; margin-bottom: 10px; }
+.timeline { margin-top: 12px; border-left: 2px solid #334155; padding-left: 16px; }
+.timeline-item { margin-bottom: 10px; font-size: 14px; }
+.timeline-item .when { color: var(--muted); font-size: 12px; }
+.next { margin-top: 12px; padding: 10px; background: #111827; border-radius: 8px; font-size: 14px; }
+.empty { text-align: center; padding: 60px 20px; color: var(--muted); }
 </style>
 </head>
 <body>
-<nav class="top-nav">
-  <a href="https://bta-group.hu/" class="brand"><img src="https://bta-group.hu/wp-content/uploads/2025/04/logo-3.png" alt="BTA" class="logo"> BTA Dashboards</a>
-  <ul>
-    <li><a href="../personal/BTA_Personal_Dashboard.html" class="nav-link">Personal</a></li>
-    <li><a href="MAD_Open_Topics_Dashboard.html" class="nav-link active">MAD Topics</a></li>
-    <li><a href="../management/BTA_Management_Oversight.html" class="nav-link">Management</a></li>
-    <li><a href="../weekly/Weekly_Activity_Report_Dashboard.html" class="nav-link">Weekly Activity</a></li>
-    <li><a href="../weekly/Weekly_Market_Research_Dashboard.html" class="nav-link">Market Research</a></li>
-    <li><a href="../stakeholder/BTA_Stakeholder_Spider_Map.html" class="nav-link">Stakeholders</a></li>
-  </ul>
+<nav class="nav">
+  <a href="https://bta-group.hu/" target="_blank"><img src="https://bta-group.hu/wp-content/uploads/2025/04/logo-3.png" alt="BTA"></a>
+  <a href="../personal/BTA_Personal_Dashboard.html">Personal</a>
+  <a href="MAD_Open_Topics_Dashboard.html" class="active">MAD Topics</a>
+  <a href="../weekly/Weekly_Activity_Report_Dashboard.html">Weekly Activity</a>
+  <a href="../weekly/Weekly_Market_Research_Dashboard.html">Market Research</a>
+  <a href="../stakeholder/BTA_Stakeholder_Spider_Map.html">Stakeholders</a>
 </nav>
-
-<header class="page-header">
+<div class="header">
   <h1>MAD Open Topics Dashboard</h1>
-  <div class="generated">Generated: 2026-11-13 09:07 CET (Europe/Budapest)</div>
-</header>
-
+  <div class="meta">Generated: 2026-11-14 09:06 Europe/Budapest</div>
+</div>
 <div class="container">
-  <div class="topic-card">
-    <span class="status-badge">ACTIVE</span>
-    <h2>MKIK Lublin Three Seas Business Mission 25–27 Nov 2026</h2>
-    <div class="topic-meta">
-      Contacts: Bernáth Georgina (MKIK), Mikola Gergely, Antall Pál, Szabó Balázs (MFA VAO)<br>
-      Status: Chamber cooperation in progress – application deadline today (13 Nov), mission 25–27 Nov
-    </div>
+  <div class="card">
+    <span class="status">ACTIVE</span>
+    <h2>TCS PMO training + capacity</h2>
     <div class="timeline">
-      <div class="timeline-item">
-        <div class="type">Mail</div>
-        <div class="date">2026-11-11</div>
-        <div class="content">FW from Georgina Bernáth with concerns on programme, official website and tight company registration deadline (13 Nov). Invitation details from Małgorzata Pałyska-Reszczynska (P-PROJECT) shared.</div>
-      </div>
-      <div class="timeline-item">
-        <div class="type">Mail</div>
-        <div class="date">2026-11-10</div>
-        <div class="content">Diplomatic support letter from Hungarian Embassy Warsaw (Szabó Balázs). Internal forwards and confirmations from Mikola and Antall that they will support company outreach.</div>
-      </div>
-      <div class="timeline-item">
-        <div class="type">Action</div>
-        <div class="date">Deadline 2026-11-13</div>
-        <div class="content">Company application / registration deadline for Hungarian participants. Follow-up needed today.</div>
-      </div>
-      <div class="timeline-item">
-        <div class="type">Calendar</div>
-        <div class="date">2026-11-25 – 27</div>
-        <div class="content">Lubelskie Three Seas Business Forum / Business Mission to Lublin (B2B meetings, study visits).</div>
-      </div>
+      <div class="timeline-item"><span class="when">2026-11-12</span> — Training live (~€14.5k / 12 pax / 4 weeks). Competency self-assessments ongoing. Confirmed budget for Balázs Stomp.</div>
+      <div class="timeline-item"><span class="when">Email</span> — PMO Capacity + Support thread (Robert Miskolczi) kept unread – ongoing support request.</div>
     </div>
-    <div class="next-action">
-      Next action: Follow up on Lublin application deadline (today 13 Nov) and confirm company outreach with Antall / Mikola / Bernáth.
+    <div class="next"><strong>Next:</strong> Follow up on WO coverage and self-assessments; confirm next capacity slots.</div>
+  </div>
+  <div class="card">
+    <span class="status">ACTIVE</span>
+    <h2>E.ON Mobilalkalmazás / Mobile App RFI (BSALES-155)</h2>
+    <div class="timeline">
+      <div class="timeline-item"><span class="when">2026-11-10</span> — Concept meeting held 9 Nov. Professional summary and PPT prepared. Awaiting next steps. Jira: Contacted.</div>
     </div>
+    <div class="next"><strong>Next:</strong> Await client feedback on concept materials; prepare detailed estimate if requested.</div>
+  </div>
+  <div class="card">
+    <span class="status">ACTIVE</span>
+    <h2>Senior .Net fejlesztő (UniCredit / Atlassian) – BSALES-160</h2>
+    <div class="timeline">
+      <div class="timeline-item"><span class="when">2026-11-12</span> — Resumed with Bytesource (Christian). Linked BRECRUIT-108 Stefkovics Péter. Multiple CVs submitted to UniCredit; selection ~3 weeks.</div>
+    </div>
+    <div class="next"><strong>Next:</strong> Monitor selection progress; follow up with Peti / Vera by 16-17 Nov.</div>
+  </div>
+  <div class="card">
+    <span class="status">ACTIVE</span>
+    <h2>MKIK Közép-Európa 2027 munkaterv + költségterv + Lublin</h2>
+    <div class="timeline">
+      <div class="timeline-item"><span class="when">2026-11-10</span> — Internal HI due ~11 Nov; KGSZB submission by 12 Nov. Lublin Three Seas Business Mission 25–27 Nov (MFA support received).</div>
+      <div class="timeline-item"><span class="when">Email</span> — MKIK committee request thread kept unread – still in progress.</div>
+    </div>
+    <div class="next"><strong>Next:</strong> Confirm Lublin application and company outreach support (Mikola + Antall).</div>
+  </div>
+  <div class="card">
+    <span class="status">ACTIVE</span>
+    <h2>Bede Ádám – UCB Task Force TPRM support</h2>
+    <div class="timeline">
+      <div class="timeline-item"><span class="when">2026-11-10</span> — Email from Róbert Hubai introducing Bede Ádám for UCB-Mint TPRM / audit compliance tasks.</div>
+    </div>
+    <div class="next"><strong>Next:</strong> Review CV / fit and decide on introduction or placement path.</div>
+  </div>
+  <div class="card">
+    <span class="status">ACTIVE</span>
+    <h2>BTA Group und NSC (Heiko Hellstern)</h2>
+    <div class="timeline">
+      <div class="timeline-item"><span class="when">Recent</span> — Incoming partnership / cooperation inquiry from NSC Europe.</div>
+    </div>
+    <div class="next"><strong>Next:</strong> Reply to explore potential collaboration scope.</div>
   </div>
 </div>
-
-<footer>
-  Static MAD dashboard · Overwritten by daily _MAD email analysis · Configs from Drive (Grok / BTA_Dashboard_Data)
-</footer>
 </body>
 </html>
