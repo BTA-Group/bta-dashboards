@@ -1,440 +1,156 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>MAD Open Topics Dashboard</title>
-  <style>
-    :root {
-      --bg: #0b0f14;
-      --card: #151c27;
-      --border: #243044;
-      --text: #e8eef7;
-      --muted: #8b9cb3;
-      --blue: #3b82f6;
-      --green: #22c55e;
-      --amber: #f59e0b;
-      --purple: #a78bfa;
-      --cyan: #22d3ee;
-      --red: #f87171;
-    }
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    body {
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-      background: var(--bg);
-      color: var(--text);
-      line-height: 1.45;
-      padding: 28px 20px 60px;
-      max-width: 1100px;
-      margin: 0 auto;
-    }
-    header {
-      margin-bottom: 32px;
-      padding-bottom: 18px;
-      border-bottom: 1px solid var(--border);
-    }
-    h1 { font-size: 1.55rem; font-weight: 700; letter-spacing: -0.02em; }
-    .sub { color: var(--muted); font-size: 0.9rem; margin-top: 4px; }
-    .legend {
-      display: flex; flex-wrap: wrap; gap: 14px; margin-top: 14px; font-size: 0.78rem;
-    }
-    .legend span { display: flex; align-items: center; gap: 6px; color: var(--muted); }
-    .dot { width: 10px; height: 10px; border-radius: 50%; }
-    .dot-mail { background: var(--blue); }
-    .dot-cal { background: var(--purple); }
-    .dot-doc { background: var(--cyan); }
-    .dot-action { background: var(--amber); }
-
-    .topic {
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      margin-bottom: 22px;
-      overflow: hidden;
-    }
-    .topic-header {
-      padding: 14px 18px;
-      background: rgba(59, 130, 246, 0.08);
-      border-bottom: 1px solid var(--border);
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
-      gap: 12px;
-      flex-wrap: wrap;
-    }
-    .topic-header h2 {
-      font-size: 1.05rem;
-      font-weight: 600;
-    }
-    .contacts { color: var(--muted); font-size: 0.82rem; margin-top: 3px; }
-    .status {
-      font-size: 0.72rem; font-weight: 600;
-      padding: 3px 10px; border-radius: 999px;
-      white-space: nowrap;
-    }
-    .status-open { background: rgba(34, 197, 94, 0.15); color: var(--green); }
-    .status-pending { background: rgba(245, 158, 11, 0.15); color: var(--amber); }
-    .status-watch { background: rgba(167, 139, 250, 0.15); color: var(--purple); }
-
-    .timeline {
-      padding: 8px 18px 16px;
-      position: relative;
-    }
-    .timeline::before {
-      content: '';
-      position: absolute;
-      left: 27px;
-      top: 12px;
-      bottom: 20px;
-      width: 2px;
-      background: var(--border);
-    }
-    .item {
-      display: grid;
-      grid-template-columns: 22px 1fr;
-      gap: 12px;
-      padding: 10px 0;
-      position: relative;
-    }
-    .item-dot {
-      width: 12px; height: 12px; border-radius: 50%;
-      margin-top: 5px; margin-left: 4px;
-      border: 2px solid var(--bg);
-      z-index: 1;
-    }
-    .item-body { min-width: 0; }
-    .item-meta {
-      display: flex; flex-wrap: wrap; gap: 8px; align-items: center;
-      font-size: 0.75rem; color: var(--muted); margin-bottom: 2px;
-    }
-    .type-badge {
-      font-size: 0.68rem; font-weight: 600;
-      padding: 1px 7px; border-radius: 4px;
-      text-transform: uppercase; letter-spacing: 0.03em;
-    }
-    .type-mail { background: rgba(59, 130, 246, 0.2); color: #93c5fd; }
-    .type-cal { background: rgba(167, 139, 250, 0.2); color: #c4b5fd; }
-    .type-doc { background: rgba(34, 211, 238, 0.2); color: #67e8f9; }
-    .type-action { background: rgba(245, 158, 11, 0.2); color: #fcd34d; }
-    .item-title { font-size: 0.9rem; font-weight: 500; }
-    .item-detail { font-size: 0.8rem; color: var(--muted); margin-top: 2px; }
-
-    footer {
-      margin-top: 28px; text-align: center;
-      color: var(--muted); font-size: 0.78rem;
-    }
-  /* BTA-NAV-CSS */
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700&display=swap');
-.bta-nav {
-  position: sticky; top: 0; z-index: 1000;
-  background: #E2AD01;
-  font-family: 'Montserrat', system-ui, sans-serif;
-  display: flex; align-items: center; justify-content: space-between;
-  gap: 16px; flex-wrap: wrap;
-  padding: 10px 20px;
-  margin: 0 0 20px 0;
-  border-radius: 0;
-  box-shadow: 0 2px 12px rgba(0,0,0,0.25);
-}
-.bta-nav a { text-decoration: none; color: #1a1a1a; }
-.bta-nav .brand { display: flex; align-items: center; gap: 12px; font-weight: 700; font-size: 0.95rem; color: #1a1a1a; }
-.bta-nav .brand img { height: 36px; width: auto; display: block; }
-.bta-nav .links { display: flex; flex-wrap: wrap; gap: 6px 4px; align-items: center; }
-.bta-nav .links a {
-  font-family: 'Montserrat', system-ui, sans-serif;
-  font-weight: 600; font-size: 0.78rem;
-  padding: 6px 12px; border-radius: 999px;
-  color: #1a1a1a;
-}
-.bta-nav .links a:hover { background: rgba(0,0,0,0.12); }
-.bta-nav .links a.active { background: #1a1a1a; color: #E2AD01; }
-body { padding-top: 0 !important; }
-/* /BTA-NAV-CSS */
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MAD Open Topics Dashboard</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+:root { --gold: #E2AD01; --bg: #0f1419; --card: #1a2332; --text: #e8e8e8; --muted: #8b9bb4; --accent: #3d8bfd; }
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Montserrat', system-ui, sans-serif; background: var(--bg); color: var(--text); line-height: 1.5; }
+nav.header { background: var(--gold); color: #111; padding: 0.75rem 1.5rem; display: flex; align-items: center; gap: 1.5rem; position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 8px rgba(0,0,0,.3); }
+nav.header img.logo { height: 36px; }
+nav.header .brand { font-weight: 700; font-size: 1.1rem; text-decoration: none; color: #111; }
+nav.header .nav-links { display: flex; gap: 0.5rem; margin-left: auto; flex-wrap: wrap; }
+nav.header a { color: #111; text-decoration: none; padding: 0.4rem 0.9rem; border-radius: 999px; font-weight: 600; font-size: 0.9rem; }
+nav.header a.active { background: #111; color: var(--gold); }
+nav.header a:hover:not(.active) { background: rgba(0,0,0,.1); }
+.container { max-width: 1200px; margin: 0 auto; padding: 1.5rem; }
+h1 { font-size: 1.8rem; margin-bottom: 0.25rem; }
+.subtitle { color: var(--muted); margin-bottom: 1.5rem; font-size: 0.95rem; }
+.cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 1.25rem; }
+.card { background: var(--card); border-radius: 12px; padding: 1.25rem; border: 1px solid #2a3548; }
+.card h2 { font-size: 1.15rem; margin-bottom: 0.5rem; color: var(--gold); }
+.status { display: inline-block; background: #1e3a2f; color: #4ade80; padding: 0.2rem 0.6rem; border-radius: 999px; font-size: 0.75rem; font-weight: 600; margin-bottom: 0.75rem; }
+.timeline { margin-top: 0.75rem; padding-left: 1rem; border-left: 2px solid #334155; }
+.timeline-item { margin-bottom: 0.6rem; font-size: 0.85rem; }
+.timeline-item .type { font-weight: 600; color: var(--accent); }
+.next-action { margin-top: 0.75rem; padding: 0.6rem; background: #252f3f; border-radius: 6px; font-size: 0.85rem; }
+.empty { text-align: center; padding: 3rem; color: var(--muted); }
+</style>
 </head>
 <body>
-<!-- BTA cross-dashboard nav -->
-<nav class="bta-nav" aria-label="BTA dashboards">
-  <a class="brand" href="https://bta-group.hu/" target="_blank" rel="noopener">
-    <img src="https://bta-group.hu/wp-content/uploads/2025/04/logo-3.png" alt="BTA Group" />
-    <span>BTA Dashboards</span>
-  </a>
-  <div class="links">
-      <a href="../personal/BTA_Personal_Dashboard.html">Personal</a>
-      <a href="MAD_Open_Topics_Dashboard.html" class="active">MAD Topics</a>
-      <a href="../management/BTA_Management_Oversight.html">Management</a>
-      <a href="../weekly/Weekly_Activity_Report_Dashboard.html">Weekly Activity</a>
-      <a href="../weekly/Weekly_Market_Research_Dashboard.html">Market Research</a>
-      <a href="../stakeholder/BTA_Stakeholder_Spider_Map.html">Stakeholders</a>
+<nav class="header">
+  <img class="logo" src="https://bta-group.hu/wp-content/uploads/2025/04/logo-3.png" alt="BTA">
+  <a class="brand" href="https://bta-group.hu/">BTA Dashboards</a>
+  <div class="nav-links">
+    <a href="../personal/BTA_Personal_Dashboard.html">Personal</a>
+    <a href="#" class="active">MAD Topics</a>
+    <a href="../weekly/Weekly_Activity_Report_Dashboard.html">Weekly Activity</a>
+    <a href="../weekly/Weekly_Market_Research_Dashboard.html">Market Research</a>
+    <a href="../stakeholder/BTA_Stakeholder_Spider_Map.html">Stakeholders</a>
   </div>
 </nav>
-
-  <header>
-    <h1>MAD Open Topics Dashboard</h1>
-    <div class="sub">Active opportunities &amp; topics · Generated 2026-11-15 09:07 Europe/Budapest · Based on snapshot 2026-11-13 + unread _MAD review</div>
-    <div class="legend">
-      <span><i class="dot dot-mail"></i> Email</span>
-      <span><i class="dot dot-cal"></i> Calendar</span>
-      <span><i class="dot dot-doc"></i> Document / strategy</span>
-      <span><i class="dot dot-action"></i> Open action</span>
+<div class="container">
+  <h1>MAD Open Topics Dashboard</h1>
+  <p class="subtitle">Generated 2026-11-16 09:09 Europe/Budapest · Active commercial topics only</p>
+  <div class="cards">
+    <div class="card">
+      <h2>TCS PMO training + capacity</h2>
+      <span class="status">ACTIVE</span>
+      <p>Training live since ~21 Oct (€14.5k / 12 pax / 4 weeks). Confirmed budget €14,022 for Balázs Stomp. Competency self-assessments and WO coverage ongoing.</p>
+      <div class="timeline">
+        <div class="timeline-item"><span class="type">mail</span> Last activity 2026-11-15 – capacity &amp; training coordination</div>
+        <div class="timeline-item"><span class="type">action</span> Follow-up on assessments and coverage</div>
+      </div>
+      <div class="next-action"><strong>Next:</strong> Confirm ongoing PMO support and training delivery with TCS contacts (John Kallivayalil, Vibin V).</div>
     </div>
-  </header>
-
-  <!-- TOPIC: TCS PMO -->
-  <section class="topic">
-    <div class="topic-header">
-      <div>
-        <h2>TCS PMO training + capacity</h2>
-        <div class="contacts">Robert Miskolczi · John Kallivayalil · Vibin V · Promodh R · Viktor Tápi · Balázs Stomp</div>
+    <div class="card">
+      <h2>E.ON Mobilalkalmazás / Mobile App RFI (BSALES-155)</h2>
+      <span class="status">ACTIVE</span>
+      <p>Concept meeting held 9 Nov 10:00–12:00. Professional summary and PPT prepared. Awaiting next steps. Jira status: Contacted (updated 10 Nov).</p>
+      <div class="timeline">
+        <div class="timeline-item"><span class="type">mail</span> Meeting follow-up and summary shared</div>
+        <div class="timeline-item"><span class="type">doc</span> PPT and estimate materials ready</div>
       </div>
-      <span class="status status-open">Active</span>
+      <div class="next-action"><strong>Next:</strong> Await client feedback on concept; prepare detailed proposal if requested.</div>
     </div>
-    <div class="timeline">
-      <div class="item">
-        <div class="item-dot" style="background:var(--blue)"></div>
-        <div class="item-body">
-          <div class="item-meta"><span class="type-badge type-mail">Mail</span><span>Ongoing</span><span>Robert Miskolczi (TCS)</span></div>
-          <div class="item-title">PMO Capacity + Support thread (34 messages)</div>
-          <div class="item-detail">Training live since ~21 Oct (€14.5k / 12 pax / 4 weeks). Competency self-assessments and WO coverage ongoing.</div>
-        </div>
+    <div class="card">
+      <h2>Senior .Net fejlesztő (UniCredit / Atlassian) – BSALES-160</h2>
+      <span class="status">ACTIVE</span>
+      <p>Resumed with Bytesource (Christian). Linked BRECRUIT-108 Stefkovics Péter (Screening). 5 CVs submitted to UniCredit Peti ~13 Nov. Interviews: Duka 16 Nov 10:00, Kevin 16 Nov 14:00, Vereb 17 Nov 14:00.</p>
+      <div class="timeline">
+        <div class="timeline-item"><span class="type">mail</span> CVs submitted and interview scheduling</div>
+        <div class="timeline-item"><span class="type">calendar</span> Interviews 16–17 Nov</div>
       </div>
-      <div class="item">
-        <div class="item-dot" style="background:var(--amber)"></div>
-        <div class="item-body">
-          <div class="item-meta"><span class="type-badge type-action">Action</span></div>
-          <div class="item-title">Continue competency assessments and WO coverage · Confirm budget for Balázs Stomp</div>
-        </div>
-      </div>
+      <div class="next-action"><strong>Next:</strong> Support interviews this week; selection expected within ~3 weeks.</div>
     </div>
-  </section>
-
-  <!-- TOPIC: E.ON -->
-  <section class="topic">
-    <div class="topic-header">
-      <div>
-        <h2>E.ON Mobilalkalmazás / Mobile App RFI (BSALES-155)</h2>
-        <div class="contacts">Ákos Oláh · Róbert Hubai · Gergő Dobránszki</div>
+    <div class="card">
+      <h2>PM – Issuing &amp; Acquiring (BSALES-157)</h2>
+      <span class="status">ACTIVE</span>
+      <p>Contacted status in Jira (11 Nov). Related to UniCredit card/issuing area after BSALES-153 closure.</p>
+      <div class="timeline">
+        <div class="timeline-item"><span class="type">mail</span> Status update 11 Nov</div>
       </div>
-      <span class="status status-pending">Active / Awaiting next</span>
+      <div class="next-action"><strong>Next:</strong> Clarify scope and next engagement steps with UniCredit contacts.</div>
     </div>
-    <div class="timeline">
-      <div class="item">
-        <div class="item-dot" style="background:var(--purple)"></div>
-        <div class="item-body">
-          <div class="item-meta"><span class="type-badge type-cal">Calendar</span><span>9 Nov 2026</span></div>
-          <div class="item-title">Concept meeting held 10:00–12:00</div>
-          <div class="item-detail">Professional summary and PPT prepared. Jira status: Contacted (updated 10 Nov).</div>
-        </div>
+    <div class="card">
+      <h2>Jira Cloud BA and Developer (BSALES-159)</h2>
+      <span class="status">ACTIVE</span>
+      <p>Opportunity opened recently. Status Opportunity.</p>
+      <div class="timeline">
+        <div class="timeline-item"><span class="type">action</span> New opportunity logged</div>
       </div>
-      <div class="item">
-        <div class="item-dot" style="background:var(--amber)"></div>
-        <div class="item-body">
-          <div class="item-meta"><span class="type-badge type-action">Action</span></div>
-          <div class="item-title">Await next steps from client · Follow up on RFI materials</div>
-        </div>
-      </div>
+      <div class="next-action"><strong>Next:</strong> Qualify requirements and identify candidate profiles.</div>
     </div>
-  </section>
-
-  <!-- TOPIC: UniCredit .NET -->
-  <section class="topic">
-    <div class="topic-header">
-      <div>
-        <h2>Senior .Net fejlesztő (UniCredit / Atlassian) – BSALES-160</h2>
-        <div class="contacts">Vera Gerencsér · Christian (Bytesource) · Toth Peter (UniCredit) · Stefkovics Péter et al.</div>
+    <div class="card">
+      <h2>SALIS / Alfa Vienna Insurance Group – CoreWeb Q4</h2>
+      <span class="status">ACTIVE</span>
+      <p>CoreWeb testing &amp; development contract extensions confirmed for 2026Q4. October timesheet approvals largely closed.</p>
+      <div class="timeline">
+        <div class="timeline-item"><span class="type">mail</span> Contract extension confirmation</div>
       </div>
-      <span class="status status-open">Active</span>
+      <div class="next-action"><strong>Next:</strong> Monitor Q4 delivery and timesheet process with Tünde Bógyisné and Róbert Hubai.</div>
     </div>
-    <div class="timeline">
-      <div class="item">
-        <div class="item-dot" style="background:var(--blue)"></div>
-        <div class="item-body">
-          <div class="item-meta"><span class="type-badge type-mail">Mail</span><span>12 Nov 2026</span></div>
-          <div class="item-title">Multiple CVs submitted to UniCredit (Duka, Kevin, Vereb, Torontáli, Ádám Zsolt)</div>
-          <div class="item-detail">Linked BRECRUIT-108 Stefkovics Péter (Screening after 11 Nov interview). Selection to complete within ~3 weeks.</div>
-        </div>
+    <div class="card">
+      <h2>ERSTE HU / MintConsulting FY27 contract</h2>
+      <span class="status">ACTIVE</span>
+      <p>Draft contract received for FY27 involving Balázs György. Róbert Hubai acknowledged and confirmed contract is fine; start from October.</p>
+      <div class="timeline">
+        <div class="timeline-item"><span class="type">mail</span> Contract review completed 13 Nov – fine with us</div>
       </div>
-      <div class="item">
-        <div class="item-dot" style="background:var(--amber)"></div>
-        <div class="item-body">
-          <div class="item-meta"><span class="type-badge type-action">Action</span><span>Deadlines ~16-17 Nov</span></div>
-          <div class="item-title">Monitor client selection · Support candidate interviews</div>
-        </div>
-      </div>
+      <div class="next-action"><strong>Next:</strong> Finalize and sign FY27 contract; confirm start details with Martin Sarnovsky.</div>
     </div>
-  </section>
-
-  <!-- TOPIC: ERSTE -->
-  <section class="topic">
-    <div class="topic-header">
-      <div>
-        <h2>ERSTE HU / MintConsulting FY27 contract</h2>
-        <div class="contacts">Róbert Hubai · Martin Sarnovsky</div>
+    <div class="card">
+      <h2>MKIK Közép-Európa 2027 munkaterv + költségterv + Lublin</h2>
+      <span class="status">ACTIVE</span>
+      <p>Internal HI and KGSZB submissions completed. Lublin Three Seas Business Mission 25–27 Nov (MFA support received). Mikola + Antall confirmed support for company outreach.</p>
+      <div class="timeline">
+        <div class="timeline-item"><span class="type">mail</span> MFA support letter and outreach coordination</div>
+        <div class="timeline-item"><span class="type">calendar</span> Mission 25–27 Nov</div>
       </div>
-      <span class="status status-open">Active</span>
+      <div class="next-action"><strong>Next:</strong> Complete company outreach for Lublin mission and finalize 2027 plans.</div>
     </div>
-    <div class="timeline">
-      <div class="item">
-        <div class="item-dot" style="background:var(--blue)"></div>
-        <div class="item-body">
-          <div class="item-meta"><span class="type-badge type-mail">Mail</span><span>13 Nov 2026</span><span>Róbert Hubai</span></div>
-          <div class="item-title">Re: ERSTE HU | MintConsulting_Balazs Gyorgy - contract FY27</div>
-          <div class="item-detail">The contract is fine with us. As we have already settled the working hours for September, it can start from October. Added missing data.</div>
-        </div>
+    <div class="card">
+      <h2>RSAT migration to TestEngine / 30 MD AI tool (BSALES-138)</h2>
+      <span class="status">ACTIVE</span>
+      <p>Project ongoing. Technical description reviewed; XAPT (Miklós Lakatos) confirmed updated draft clearer on 12 Nov. Jira updated 12 Nov.</p>
+      <div class="timeline">
+        <div class="timeline-item"><span class="type">mail</span> Draft feedback 12 Nov</div>
+        <div class="timeline-item"><span class="type">doc</span> Technical description updated</div>
       </div>
-      <div class="item">
-        <div class="item-dot" style="background:var(--amber)"></div>
-        <div class="item-body">
-          <div class="item-meta"><span class="type-badge type-action">Action</span></div>
-          <div class="item-title">Confirm final details with Martin · Close the FY27 contract</div>
-        </div>
-      </div>
+      <div class="next-action"><strong>Next:</strong> Align on final scope and timeline with XAPT and internal team (Balázs Stomp).</div>
     </div>
-  </section>
-
-  <!-- TOPIC: MKIK -->
-  <section class="topic">
-    <div class="topic-header">
-      <div>
-        <h2>MKIK Közép-Európa 2027 munkaterv + Lublin Business Mission</h2>
-        <div class="contacts">Pál Antall · Balázs Szabó · Gergely Mikola · Georgina Bernáth</div>
+    <div class="card">
+      <h2>AML compliance BA (BSALES-144)</h2>
+      <span class="status">ACTIVE</span>
+      <p>Active opportunity. Last activity 2026-11-10.</p>
+      <div class="timeline">
+        <div class="timeline-item"><span class="type">mail</span> Recent updates</div>
       </div>
-      <span class="status status-open">Active</span>
+      <div class="next-action"><strong>Next:</strong> Progress candidate search and client discussions.</div>
     </div>
-    <div class="timeline">
-      <div class="item">
-        <div class="item-dot" style="background:var(--blue)"></div>
-        <div class="item-body">
-          <div class="item-meta"><span class="type-badge type-mail">Mail</span><span>6–11 Nov 2026</span><span>Bernáth / Mikola / Antall / MFA</span></div>
-          <div class="item-title">Lublin Three Seas Business Mission 25–27 Nov + 2027 work plan</div>
-          <div class="item-detail">MFA support received. Mikola + Antall confirmed support for company outreach. Internal HI and KGSZB submissions around 11-12 Nov.</div>
-        </div>
+    <div class="card">
+      <h2>Graphi Miro helyett kell valaki (BSALES-62)</h2>
+      <span class="status">ACTIVE</span>
+      <p>Ongoing. Follow-up to László Sándor after Graphisoft. Jira updates through Nov.</p>
+      <div class="timeline">
+        <div class="timeline-item"><span class="type">mail</span> Status update 16 Nov – follow-up noted</div>
       </div>
-      <div class="item">
-        <div class="item-dot" style="background:var(--amber)"></div>
-        <div class="item-body">
-          <div class="item-meta"><span class="type-badge type-action">Action</span><span>Mission 25–27 Nov</span></div>
-          <div class="item-title">Finalize company outreach · Prepare for Lublin mission</div>
-        </div>
-      </div>
+      <div class="next-action"><strong>Next:</strong> Continue candidate evaluation and client alignment on org chart timeline.</div>
     </div>
-  </section>
-
-  <!-- TOPIC: RSAT -->
-  <section class="topic">
-    <div class="topic-header">
-      <div>
-        <h2>RSAT migration to TestEngine / 30 MD AI tool (BSALES-138)</h2>
-        <div class="contacts">Balázs Stomp · Miklós Lakatos (XAPT)</div>
-      </div>
-      <span class="status status-open">Active</span>
-    </div>
-    <div class="timeline">
-      <div class="item">
-        <div class="item-dot" style="background:var(--blue)"></div>
-        <div class="item-body">
-          <div class="item-meta"><span class="type-badge type-mail">Mail</span><span>11–12 Nov 2026</span></div>
-          <div class="item-title">XAPT feedback on technical description · Updated draft sent</div>
-          <div class="item-detail">Miklós confirmed clearer and more understandable. Project ongoing.</div>
-        </div>
-      </div>
-      <div class="item">
-        <div class="item-dot" style="background:var(--amber)"></div>
-        <div class="item-body">
-          <div class="item-meta"><span class="type-badge type-action">Action</span></div>
-          <div class="item-title">Finalize scope and roles with XAPT</div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- TOPIC: NSC Partnership -->
-  <section class="topic">
-    <div class="topic-header">
-      <div>
-        <h2>NSC Europe – External Developer Capacity Partnership</h2>
-        <div class="contacts">Heiko Hellstern (NSC Europe)</div>
-      </div>
-      <span class="status status-watch">Lead / Under review</span>
-    </div>
-    <div class="timeline">
-      <div class="item">
-        <div class="item-dot" style="background:var(--blue)"></div>
-        <div class="item-body">
-          <div class="item-meta"><span class="type-badge type-mail">Mail</span><span>6 Nov 2026</span><span>Heiko Hellstern</span></div>
-          <div class="item-title">BTA Group und NSC – external developers capacity pitch</div>
-          <div class="item-detail">Offer for flexible external developers to handle new projects and higher utilization without immediate headcount expansion.</div>
-        </div>
-      </div>
-      <div class="item">
-        <div class="item-dot" style="background:var(--amber)"></div>
-        <div class="item-body">
-          <div class="item-meta"><span class="type-badge type-action">Action</span></div>
-          <div class="item-title">Review partnership proposal · Respond if interest</div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- TOPIC: Bede TPRM -->
-  <section class="topic">
-    <div class="topic-header">
-      <div>
-        <h2>Bede Ádám – UCB Task Force TPRM support</h2>
-        <div class="contacts">Róbert Hubai · Ádám Bede</div>
-      </div>
-      <span class="status status-pending">Recruitment / Opportunity</span>
-    </div>
-    <div class="timeline">
-      <div class="item">
-        <div class="item-dot" style="background:var(--blue)"></div>
-        <div class="item-body">
-          <div class="item-meta"><span class="type-badge type-mail">Mail</span><span>10 Nov 2026</span><span>Róbert Hubai</span></div>
-          <div class="item-title">Bede Ádám - UCB Task Force TPRM support</div>
-          <div class="item-detail">Candidate details and tasks related to UCB-Mint order for TPRM audit compliance support.</div>
-        </div>
-      </div>
-      <div class="item">
-        <div class="item-dot" style="background:var(--amber)"></div>
-        <div class="item-body">
-          <div class="item-meta"><span class="type-badge type-action">Action</span></div>
-          <div class="item-title">Evaluate fit and progress placement if suitable</div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- TOPIC: Varga István -->
-  <section class="topic">
-    <div class="topic-header">
-      <div>
-        <h2>Varga István placement progress</h2>
-        <div class="contacts">Veronika Gerencsér</div>
-      </div>
-      <span class="status status-open">Active recruitment</span>
-    </div>
-    <div class="timeline">
-      <div class="item">
-        <div class="item-dot" style="background:var(--blue)"></div>
-        <div class="item-body">
-          <div class="item-meta"><span class="type-badge type-mail">Mail</span><span>13–14 Nov 2026</span><span>Veronika Gerencsér</span></div>
-          <div class="item-title">Varga István 🥳 – positive update, "jöhet"</div>
-          <div class="item-detail">Candidate called and is interested. Specifics on start date and conditions to be confirmed Monday. Internal celebration of progress.</div>
-        </div>
-      </div>
-      <div class="item">
-        <div class="item-dot" style="background:var(--amber)"></div>
-        <div class="item-body">
-          <div class="item-meta"><span class="type-badge type-action">Action</span></div>
-          <div class="item-title">Confirm start date and conditions with Varga István</div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <footer>
-    MAD Open Topics Dashboard · Refreshed 2026-11-15 09:07 Europe/Budapest<br>
-    Configs loaded from Google Drive (BTA_Dashboard_Data) · Noise emails marked read · Active topics kept unread
-  </footer>
+  </div>
+</div>
 </body>
 </html>
