@@ -1,1 +1,552 @@
-See local file - will be replaced by full content in next step
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BTA Personal Dashboard – Gergácz Bálint</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0b0f14;
+      --card: #151c27;
+      --border: #243044;
+      --text: #e8eef7;
+      --muted: #8b9cb3;
+      --blue: #3b82f6;
+      --green: #22c55e;
+      --amber: #f59e0b;
+      --purple: #a78bfa;
+      --cyan: #22d3ee;
+      --red: #f87171;
+      --gold: #E2AD01;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.5;
+      padding: 0 20px 60px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .bta-nav {
+      position: sticky; top: 0; z-index: 1000;
+      background: #E2AD01;
+      font-family: 'Montserrat', system-ui, sans-serif;
+      display: flex; align-items: center; justify-content: space-between;
+      gap: 16px; flex-wrap: wrap;
+      padding: 10px 20px;
+      margin: 0 -20px 28px -20px;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.25);
+    }
+    .bta-nav a { text-decoration: none; color: #1a1a1a; }
+    .bta-nav .brand { display: flex; align-items: center; gap: 12px; font-weight: 700; font-size: 0.95rem; color: #1a1a1a; }
+    .bta-nav .brand img { height: 36px; width: auto; display: block; }
+    .bta-nav .links { display: flex; flex-wrap: wrap; gap: 6px 4px; align-items: center; }
+    .bta-nav .links a {
+      font-family: 'Montserrat', system-ui, sans-serif;
+      font-weight: 600; font-size: 0.78rem;
+      padding: 6px 12px; border-radius: 999px;
+      background: rgba(0,0,0,0.08); color: #1a1a1a;
+      transition: background 0.15s;
+    }
+    .bta-nav .links a:hover { background: rgba(0,0,0,0.16); }
+    .bta-nav .links a.active {
+      background: #1a1a1a; color: #E2AD01;
+    }
+
+    header.page-header {
+      margin-bottom: 28px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid var(--border);
+    }
+    h1 { font-size: 1.65rem; font-weight: 700; letter-spacing: -0.02em; }
+    .sub { color: var(--muted); font-size: 0.92rem; margin-top: 6px; }
+    .meta { color: var(--muted); font-size: 0.78rem; margin-top: 4px; }
+
+    section { margin-bottom: 36px; }
+    h2.section-title {
+      font-size: 1.15rem; font-weight: 600;
+      margin-bottom: 14px;
+      display: flex; align-items: center; gap: 8px;
+    }
+    h2.section-title::before {
+      content: '';
+      width: 4px; height: 18px;
+      background: var(--gold);
+      border-radius: 2px;
+    }
+
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+      gap: 14px;
+    }
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 16px 18px;
+      transition: border-color 0.15s;
+    }
+    .card:hover { border-color: #3a4a66; }
+    .card-header {
+      display: flex; justify-content: space-between; align-items: flex-start;
+      gap: 10px; margin-bottom: 8px;
+    }
+    .card h3 {
+      font-size: 0.98rem; font-weight: 600; line-height: 1.3;
+    }
+    .id-badge {
+      font-size: 0.7rem; font-weight: 600;
+      padding: 2px 8px; border-radius: 4px;
+      background: rgba(59, 130, 246, 0.18); color: #93c5fd;
+      white-space: nowrap;
+    }
+    .status {
+      font-size: 0.68rem; font-weight: 600;
+      padding: 2px 9px; border-radius: 999px;
+      white-space: nowrap; text-transform: uppercase; letter-spacing: 0.02em;
+    }
+    .status-active { background: rgba(34, 197, 94, 0.15); color: var(--green); }
+    .status-closed { background: rgba(139, 156, 179, 0.15); color: var(--muted); }
+    .status-positive { background: rgba(34, 197, 94, 0.18); color: #4ade80; }
+    .status-new { background: rgba(59, 130, 246, 0.15); color: #93c5fd; }
+    .note { font-size: 0.84rem; color: var(--muted); margin: 6px 0; }
+    .contacts, .deadlines, .meta-line {
+      font-size: 0.78rem; color: var(--muted); margin-top: 6px;
+    }
+    .contacts strong, .deadlines strong { color: var(--text); font-weight: 500; }
+
+    .list-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 16px 18px;
+    }
+    .list-item {
+      padding: 10px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .list-item:last-child { border-bottom: none; }
+    .list-item h4 { font-size: 0.92rem; font-weight: 600; }
+    .list-item .date { font-size: 0.75rem; color: var(--amber); float: right; }
+
+    .timeline-item {
+      display: grid;
+      grid-template-columns: 90px 1fr;
+      gap: 12px;
+      padding: 10px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .timeline-item:last-child { border-bottom: none; }
+    .tl-date { font-size: 0.78rem; color: var(--muted); font-weight: 500; }
+    .tl-body { font-size: 0.88rem; }
+    .tl-body strong { font-weight: 600; }
+
+    footer {
+      margin-top: 40px; text-align: center;
+      color: var(--muted); font-size: 0.75rem;
+      border-top: 1px solid var(--border);
+      padding-top: 16px;
+    }
+  </style>
+</head>
+<body>
+
+<nav class="bta-nav">
+  <a href="https://bta-group.hu/" class="brand" target="_blank">
+    <img src="https://bta-group.hu/wp-content/uploads/2025/04/logo-3.png" alt="BTA">
+    BTA Dashboards
+  </a>
+  <div class="links">
+    <a href="#" class="active">Personal</a>
+    <a href="../mad/MAD_Open_Topics_Dashboard.html">MAD Topics</a>
+    <a href="../management/BTA_Management_Oversight.html">Management</a>
+    <a href="../weekly/Weekly_Activity_Report_Dashboard.html">Weekly Activity</a>
+    <a href="../weekly/Weekly_Market_Research_Dashboard.html">Market Research</a>
+    <a href="../stakeholder/BTA_Stakeholder_Spider_Map.html">Stakeholders</a>
+  </div>
+</nav>
+
+<header class="page-header">
+  <h1>BTA Personal Dashboard</h1>
+  <div class="sub">For Gergácz Bálint · Sales · Recruitment · Calendar · Next steps</div>
+  <div class="meta">Generated 2026-11-16 · Data from shared snapshot (v1.1, 06:42 CET) · Fresh within TTL</div>
+</header>
+
+<!-- 1. Sales overview -->
+<section>
+  <h2 class="section-title">Sales overview</h2>
+  <div class="card-grid">
+
+    <div class="card">
+      <div class="card-header">
+        <h3>TCS PMO training + capacity</h3>
+        <span class="status status-active">Active</span>
+      </div>
+      <div class="id-badge">TCS PMO</div>
+      <p class="note">Training live since ~21 Oct (€14.5k / 12 pax / 4 weeks). Confirmed budget €14,022 for Balázs Stomp. Competency self-assessments and WO coverage ongoing.</p>
+      <div class="contacts"><strong>Contacts:</strong> John Kallivayalil, Vibin V, Promodh R, Viktor Tápi, Balázs Stomp</div>
+      <div class="meta-line">Last activity: 2026-11-15</div>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <h3>E.ON Mobilalkalmazás / Mobile App RFI</h3>
+        <span class="status status-active">Active</span>
+      </div>
+      <div class="id-badge">BSALES-155</div>
+      <p class="note">Concept meeting held 9 Nov 10:00–12:00. Professional summary and PPT prepared. Awaiting next steps. Jira status: Contacted (updated 10 Nov).</p>
+      <div class="contacts"><strong>Contacts:</strong> Ákos Oláh, Róbert Hubai, Gergő Dobránszki</div>
+      <div class="meta-line">Last activity: 2026-11-10</div>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <h3>Senior .Net fejlesztő (UniCredit / Atlassian)</h3>
+        <span class="status status-active">Active</span>
+      </div>
+      <div class="id-badge">BSALES-160</div>
+      <p class="note">Resumed with Bytesource (Christian). Linked BRECRUIT-108 Stefkovics Péter (Screening). 5 CVs (Duka, Kevin, Vereb, Torontáli, Ádám Zsolt) submitted to UniCredit Peti ~13 Nov. Interviews: Duka 16 Nov 10:00 (client), Kevin 16 Nov 14:00, Vereb 17 Nov 14:00. Selection within ~3 weeks.</p>
+      <div class="deadlines"><strong>Deadlines:</strong> 2026-11-16, 2026-11-17</div>
+      <div class="contacts"><strong>Contacts:</strong> Vera Gerencsér, Christian (Bytesource), Toth Peter (UniCredit)</div>
+      <div class="meta-line">Last activity: 2026-11-13</div>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <h3>PM – Issuing & Acquiring</h3>
+        <span class="status status-active">Active</span>
+      </div>
+      <div class="id-badge">BSALES-157</div>
+      <p class="note">Contacted status in Jira (11 Nov). Related to UniCredit card/issuing area after BSALES-153 closure.</p>
+      <div class="meta-line">Last activity: 2026-11-11</div>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <h3>Jira Cloud BA and Developer</h3>
+        <span class="status status-active">Active</span>
+      </div>
+      <div class="id-badge">BSALES-159</div>
+      <p class="note">Opportunity opened recently. Status Opportunity.</p>
+      <div class="meta-line">Last activity: 2026-11-05</div>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <h3>SALIS / Alfa Vienna Insurance Group – CoreWeb Q4</h3>
+        <span class="status status-active">Active</span>
+      </div>
+      <div class="id-badge">SALIS-Alfa</div>
+      <p class="note">CoreWeb testing & development contract extensions confirmed for 2026Q4. October timesheet approvals largely closed.</p>
+      <div class="contacts"><strong>Contacts:</strong> Bógyisné Balassa Tünde, Róbert Hubai</div>
+      <div class="meta-line">Last activity: 2026-11-15</div>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <h3>ERSTE HU / MintConsulting FY27 contract</h3>
+        <span class="status status-active">Active</span>
+      </div>
+      <div class="id-badge">ERSTE-FY27</div>
+      <p class="note">Draft contract received for FY27 involving Balázs György. Róbert Hubai acknowledged and will review in a few days.</p>
+      <div class="contacts"><strong>Contacts:</strong> Róbert Hubai, Martin Sarnovsky, Balázs György</div>
+      <div class="meta-line">Last activity: 2026-11-15</div>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <h3>MKIK Közép-Európa 2027 munkaterv + költségterv + Lublin</h3>
+        <span class="status status-active">Active</span>
+      </div>
+      <div class="id-badge">MKIK-2027</div>
+      <p class="note">Internal HI and KGSZB submissions completed. Lublin Three Seas Business Mission 25–27 Nov (MFA support received; application deadline passed). Mikola + Antall confirmed support for company outreach.</p>
+      <div class="deadlines"><strong>Deadlines:</strong> 2026-11-25</div>
+      <div class="contacts"><strong>Contacts:</strong> Pál Antall, Balázs Szabó, Gergely Mikola, Georgina Bernáth</div>
+      <div class="meta-line">Last activity: 2026-11-15</div>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <h3>RSAT migration to TestEngine / 30 MD AI tool</h3>
+        <span class="status status-active">Active</span>
+      </div>
+      <div class="id-badge">BSALES-138</div>
+      <p class="note">Project ongoing. Technical description reviewed; XAPT (Miklós Lakatos) confirmed updated draft clearer and more understandable on 12 Nov. Jira updated 12 Nov.</p>
+      <div class="contacts"><strong>Contacts:</strong> Balázs Stomp, Miklós Lakatos</div>
+      <div class="meta-line">Last activity: 2026-11-12</div>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <h3>AML compliance BA</h3>
+        <span class="status status-active">Active</span>
+      </div>
+      <div class="id-badge">BSALES-144</div>
+      <p class="note">Contacted status. Updated 10 Nov.</p>
+      <div class="meta-line">Last activity: 2026-11-10</div>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <h3>Graphi Miro helyett kell valaki</h3>
+        <span class="status status-active">Active</span>
+      </div>
+      <div class="id-badge">BSALES-62</div>
+      <p class="note">In Negotiation. Label ProjMan added 10 Nov. Org chart discussion ongoing with Marci.</p>
+      <div class="contacts"><strong>Contacts:</strong> Marci</div>
+      <div class="meta-line">Last activity: 2026-11-10</div>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <h3>Unicredit Kártya / Issuing & Acquiring PM</h3>
+        <span class="status status-closed">Closed</span>
+      </div>
+      <div class="id-badge">BSALES-153</div>
+      <p class="note">Tender closed (Mint Consulting did not advance). Related NDA/contracting docs processed. Jira still shows Contacted but effectively closed per Daily Catch-Up.</p>
+      <div class="meta-line">Last activity: 2026-11-10</div>
+    </div>
+
+    <div class="card">
+      <div class="card-header">
+        <h3>SAP kiváltás tervezési folyamat kialakítása</h3>
+        <span class="status status-closed">Closed</span>
+      </div>
+      <div class="id-badge">BSALES-150</div>
+      <p class="note">Marked Lost in Jira on 9 Nov.</p>
+      <div class="meta-line">Last activity: 2026-11-09</div>
+    </div>
+
+  </div>
+
+  <h3 style="margin: 22px 0 10px; font-size: 1rem;">Recent leads</h3>
+  <div class="list-card">
+    <div class="list-item">
+      <span class="date">2026-11-15</span>
+      <h4>Varga István <span style="color:var(--muted);font-weight:400;font-size:0.8rem;">(organic)</span></h4>
+      <p class="note">Expressed readiness to start. Discussing net 750k HUF salary expectation; finalization scheduled for Monday 16 Nov.</p>
+    </div>
+    <div class="list-item">
+      <span class="date">2026-11-15</span>
+      <h4>Révész Gergő <span style="color:var(--muted);font-weight:400;font-size:0.8rem;">(organic)</span></h4>
+      <p class="note">Applied for part-time .NET Developer (20–30 hours/week).</p>
+    </div>
+    <div class="list-item">
+      <span class="date">2026-11-15</span>
+      <h4>Budai Boglárka <span style="color:var(--muted);font-weight:400;font-size:0.8rem;">(referral)</span></h4>
+      <p class="note">Introduced by Pál Antall. Seeking remote finance or administrative role with net salary >530k HUF.</p>
+    </div>
+    <div class="list-item">
+      <span class="date">2026-11-12</span>
+      <h4>Kubatov Gergő <span style="color:var(--muted);font-weight:400;font-size:0.8rem;">(organic)</span></h4>
+      <p class="note">Applied for .NET Developer. Phone 06706600745, kubatov.gergo@gmail.com.</p>
+    </div>
+    <div class="list-item">
+      <span class="date">2026-11-12</span>
+      <h4>Nagy Dániel <span style="color:var(--muted);font-weight:400;font-size:0.8rem;">(organic)</span></h4>
+      <p class="note">Applied for .NET Developer. Drive CV, phone 06204041419, danielnagy600@gmail.com.</p>
+    </div>
+    <div class="list-item">
+      <span class="date">2026-11-12</span>
+      <h4>Dr. Ivicz László <span style="color:var(--muted);font-weight:400;font-size:0.8rem;">(organic)</span></h4>
+      <p class="note">Applied for .NET Developer. Phone +36202205567, ivicz.laszlo.dr@gmail.com.</p>
+    </div>
+  </div>
+
+  <h3 style="margin: 22px 0 10px; font-size: 1rem;">Networking</h3>
+  <div class="list-card">
+    <div class="list-item">MKIK Lublin Three Seas Business Mission 25–27 Nov with MFA support</div>
+    <div class="list-item">Antall Pál, Mikola Gergely outreach support confirmed</div>
+    <div class="list-item">Regus Vienna Westbahnhof location closing 31 Dec; decision on alternatives by 17 Nov</div>
+  </div>
+</section>
+
+<!-- 2. Recruitment overview -->
+<section>
+  <h2 class="section-title">Recruitment overview</h2>
+  <p style="color:var(--muted);font-size:0.85rem;margin-bottom:12px;">Last 7 days · BRECRUIT + inbox + candidates by position</p>
+
+  <h3 style="margin: 8px 0 10px; font-size: 1rem;">Sales candidates</h3>
+  <div class="card-grid">
+    <div class="card">
+      <div class="card-header">
+        <h3>Tenki Alex</h3>
+        <span class="status status-active">Active</span>
+      </div>
+      <p class="note">In sales/BD pipeline. Source: internal.</p>
+    </div>
+    <div class="card">
+      <div class="card-header">
+        <h3>Molnár Julianna</h3>
+        <span class="status status-active">Active</span>
+      </div>
+      <p class="note">In sales/BD pipeline. Source: internal.</p>
+    </div>
+  </div>
+
+  <h3 style="margin: 18px 0 10px; font-size: 1rem;">PM / BA / .NET pipeline</h3>
+  <div class="card-grid">
+    <div class="card">
+      <div class="card-header">
+        <h3>Stefkovics Péter</h3>
+        <span class="status status-positive">Positive</span>
+      </div>
+      <p class="note">Senior .NET/C# (10+ yrs), full-stack, NATO SECRET clearance to 2030. Introduced by Melinda Bozsvai. Positive internal review. Linked BRECRUIT-108 (Screening) + BSALES-160. Interview held 11 Nov. Salary: prefers EUR (German health insurance); ~300 EUR/day. Lives in Germany but has HU address. CVs prepared by AI and reviewed.</p>
+      <div class="meta-line">Source: referral (Bozsvai Melinda) · Updated 2026-11-13</div>
+    </div>
+    <div class="card">
+      <div class="card-header">
+        <h3>Duka Dávid</h3>
+        <span class="status status-active">Active</span>
+      </div>
+      <p class="note">Re-applied for .NET. Previously interviewed at UniCredit. BTA CV exists. BRECRUIT-113 Applications. Client interview scheduled 16 Nov 10:00 with UniCredit. CV submitted to Peti.</p>
+      <div class="meta-line">Source: internal referral · Updated 2026-11-13</div>
+    </div>
+    <div class="card">
+      <div class="card-header">
+        <h3>Gergely Kevin</h3>
+        <span class="status status-new">New</span>
+      </div>
+      <p class="note">Senior .NET (5 yrs, 1 yr OTP). Available immediately. Introduced by Annamária. BRECRUIT-111 Applications. Interview 16 Nov 14:00. CV submitted to UniCredit.</p>
+      <div class="meta-line">Source: internal (Kovács Annamária) · Updated 2026-11-13</div>
+    </div>
+    <div class="card">
+      <div class="card-header">
+        <h3>Vereb Máté</h3>
+        <span class="status status-new">New</span>
+      </div>
+      <p class="note">Senior .NET, 5 yrs, bank experience at MNB, available immediately. BRECRUIT-112 Applications. Interview 17 Nov 14:00. CV submitted to UniCredit.</p>
+      <div class="meta-line">Source: internal (Kovács Annamária) · Updated 2026-11-13</div>
+    </div>
+    <div class="card">
+      <div class="card-header">
+        <h3>Torontáli Máté</h3>
+        <span class="status status-new">New</span>
+      </div>
+      <p class="note">Evaluated as additional .NET candidate. Bank background (OTP). CV submitted to UniCredit.</p>
+      <div class="meta-line">Source: internal · Updated 2026-11-13</div>
+    </div>
+    <div class="card">
+      <div class="card-header">
+        <h3>Ádám Zsolt</h3>
+        <span class="status status-new">New</span>
+      </div>
+      <p class="note">Evaluated as additional .NET candidate (Attila Gerőcs recommendation). CV submitted to UniCredit.</p>
+      <div class="meta-line">Source: internal · Updated 2026-11-13</div>
+    </div>
+    <div class="card">
+      <div class="card-header">
+        <h3>Danyek Gábor</h3>
+        <span class="status status-new">New</span>
+      </div>
+      <p class="note">Senior .NET with SharePoint + legacy experience, available immediately. Introduced by Annamária 11 Nov.</p>
+      <div class="meta-line">Source: internal (Kovács Annamária) · Updated 2026-11-11</div>
+    </div>
+    <div class="card">
+      <div class="card-header">
+        <h3>Szepesfalvyv Tamás</h3>
+        <span class="status status-new">New</span>
+      </div>
+      <p class="note">Organic .NET application 11 Nov. Ádám noted it looks quite good.</p>
+      <div class="meta-line">Source: organic · Updated 2026-11-11</div>
+    </div>
+  </div>
+
+  <h3 style="margin: 18px 0 10px; font-size: 1rem;">BRECRUIT notes</h3>
+  <div class="list-card">
+    <div class="list-item">BRECRUIT-108 Stefkovics Péter updated 13 Nov (Screening; CV folder noted by Mariann)</div>
+    <div class="list-item">BRECRUIT-113 Duka Dávid, BRECRUIT-111 Gergely Kevin, BRECRUIT-112 Vereb Máté created 12 Nov (Applications)</div>
+    <div class="list-item">5 BTA CVs prepared by Vera (AI-assisted) and sent for UniCredit submission</div>
+    <div class="list-item">Stefkovics salary clarified to ~300 EUR/day due to German residency preference</div>
+  </div>
+</section>
+
+<!-- 3. Previous 7 days work -->
+<section>
+  <h2 class="section-title">Previous 7 days work</h2>
+  <div class="list-card">
+    <div class="timeline-item">
+      <div class="tl-date">2026-11-09<br>10:00</div>
+      <div class="tl-body"><strong>E.ON - BTA Mobilalkalmazás-fejlesztési koncepció</strong><br>Ákos Oláh, Hubai, Dobránszki + E.ON team</div>
+    </div>
+    <div class="timeline-item">
+      <div class="tl-date">2026-11-11<br>11:00</div>
+      <div class="tl-body"><strong>[BTA Group]: Senior .NET interview (Stefkovics Péter)</strong><br>Bálint + Peter Stefkovics</div>
+    </div>
+    <div class="timeline-item">
+      <div class="tl-date">2026-11-11<br>12:00</div>
+      <div class="tl-body"><strong>Antall Pali, Bálint, MAD</strong><br>Antall, Ádám, Bálint</div>
+    </div>
+    <div class="timeline-item">
+      <div class="tl-date">2026-11-11<br>13:00</div>
+      <div class="tl-body"><strong>Robi-Bálint-Vera-Patrik heti egyeztetés</strong><br>Hubai, Vera, Patrik, Bálint</div>
+    </div>
+    <div class="timeline-item">
+      <div class="tl-date">2026-11-13<br>10:30</div>
+      <div class="tl-body"><strong>Customer cases</strong><br>Bálint</div>
+    </div>
+  </div>
+</section>
+
+<!-- 4. Next steps with deadlines -->
+<section>
+  <h2 class="section-title">Next steps with deadlines</h2>
+  <div class="list-card">
+    <div class="timeline-item">
+      <div class="tl-date" style="color:var(--amber);">2026-11-16</div>
+      <div class="tl-body"><strong>UniCredit Duka Dávid client interview 10:00 + Gergely Kevin internal 14:00</strong><br>Owner: Bálint</div>
+    </div>
+    <div class="timeline-item">
+      <div class="tl-date" style="color:var(--amber);">2026-11-16</div>
+      <div class="tl-body"><strong>Varga István salary finalization (net 750k)</strong><br>Owner: Bálint / Vera</div>
+    </div>
+    <div class="timeline-item">
+      <div class="tl-date" style="color:var(--amber);">2026-11-17</div>
+      <div class="tl-body"><strong>Vereb Máté .NET interview 14:00; Regus Vienna location decision</strong><br>Owner: Bálint</div>
+    </div>
+    <div class="timeline-item">
+      <div class="tl-date">2026-11-25</div>
+      <div class="tl-body"><strong>MKIK Lublin Three Seas Business Mission</strong><br>Owner: MKIK / Antall / Mikola</div>
+    </div>
+    <div class="timeline-item">
+      <div class="tl-date">2026-11-27</div>
+      <div class="tl-body"><strong>Christian (Bytesource) call re BSALES-160</strong><br>Owner: Bálint</div>
+    </div>
+  </div>
+
+  <h3 style="margin: 18px 0 10px; font-size: 1rem;">Upcoming calendar</h3>
+  <div class="list-card">
+    <div class="timeline-item">
+      <div class="tl-date">2026-11-16<br>10:00</div>
+      <div class="tl-body"><strong>Duka Dávid interjú (UniCredit)</strong><br>Toth Peter, Dombai, UniCredit team</div>
+    </div>
+    <div class="timeline-item">
+      <div class="tl-date">2026-11-16<br>14:00</div>
+      <div class="tl-body"><strong>Gergely Kevin - .NET fejlesztő jelölt</strong><br>Bálint, Annamária, Kevin</div>
+    </div>
+    <div class="timeline-item">
+      <div class="tl-date">2026-11-17<br>14:00</div>
+      <div class="tl-body"><strong>Vereb Máté - .NET fejlesztő jelölt</strong><br>Bálint, Annamária, Máté</div>
+    </div>
+    <div class="timeline-item">
+      <div class="tl-date">2026-11-25<br>all-day</div>
+      <div class="tl-body"><strong>MKIK Lublin Three Seas Business Mission</strong><br>MKIK / company outreach</div>
+    </div>
+    <div class="timeline-item">
+      <div class="tl-date">2026-11-27<br>TBD</div>
+      <div class="tl-body"><strong>Christian & Balint</strong><br>Christian Pascher (Bytesource)</div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  BTA Personal Dashboard · Overwritten 2026-11-16 · Source: shared/snapshot.json (v1.1, generated 2026-11-16T06:42) · Static path only
+</footer>
+
+</body>
+</html>
