@@ -6,54 +6,90 @@
 <title>MAD Open Topics Dashboard</title>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700&display=swap" rel="stylesheet">
 <style>
-:root { --gold: #E2AD01; --bg: #0f1419; --card: #1a2332; --text: #e8e8e8; --muted: #8b9bb4; --accent: #3d8bfd; }
-* { box-sizing: border-box; margin: 0; padding: 0; }
-body { font-family: 'Montserrat', system-ui, sans-serif; background: var(--bg); color: var(--text); line-height: 1.5; }
-.nav { background: var(--gold); color: #111; padding: 0.75rem 1.5rem; display: flex; align-items: center; gap: 1.5rem; position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 8px rgba(0,0,0,.3); }
-.nav img { height: 32px; }
-.nav a { color: #111; text-decoration: none; font-weight: 600; padding: 0.4rem 0.8rem; border-radius: 999px; font-size: 0.9rem; }
-.nav a.active { background: #111; color: var(--gold); }
-.nav a:hover:not(.active) { background: rgba(0,0,0,.1); }
-.container { max-width: 1200px; margin: 0 auto; padding: 1.5rem; }
-header h1 { font-size: 1.8rem; margin-bottom: 0.25rem; }
-.meta { color: var(--muted); font-size: 0.85rem; margin-bottom: 1.5rem; }
-.cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 1.25rem; }
-.card { background: var(--card); border-radius: 12px; padding: 1.25rem; border: 1px solid #2a3548; }
-.card h2 { font-size: 1.1rem; margin-bottom: 0.5rem; color: var(--gold); }
-.status { display: inline-block; background: #1e3a2f; color: #4ade80; padding: 0.2rem 0.6rem; border-radius: 999px; font-size: 0.75rem; font-weight: 600; margin-bottom: 0.75rem; }
-.timeline { margin-top: 1rem; border-left: 2px solid #334155; padding-left: 1rem; }
-.tl-item { margin-bottom: 0.75rem; font-size: 0.85rem; }
-.tl-item strong { color: var(--accent); }
-.next { margin-top: 1rem; padding-top: 0.75rem; border-top: 1px solid #334155; font-size: 0.9rem; }
-.empty { text-align: center; padding: 4rem 1rem; color: var(--muted); }
+:root { --gold: #E2AD01; --bg: #121212; --card: #1e1e1e; --text: #e0e0e0; --accent: #bb86fc; }
+body { margin:0; background:var(--bg); color:var(--text); font-family: 'Montserrat', sans-serif; }
+nav { background: var(--gold); padding: 10px 20px; display:flex; align-items:center; position:sticky; top:0; z-index:100; }
+nav img { height:40px; margin-right:20px; }
+nav a { color:#000; text-decoration:none; margin:0 15px; font-weight:600; padding:8px 12px; border-radius:20px; }
+nav a.active { background:#333; color:var(--gold); }
+nav a:hover { background:#444; color:#fff; }
+header { padding:20px; text-align:center; border-bottom:1px solid #333; }
+.card { background:var(--card); margin:20px auto; max-width:900px; padding:20px; border-radius:12px; box-shadow:0 4px 12px rgba(0,0,0,0.5); }
+.card h2 { margin-top:0; color:var(--gold); }
+.status { display:inline-block; background:#333; padding:4px 12px; border-radius:12px; font-size:0.85em; }
+.timeline { margin-top:15px; border-left:2px solid var(--gold); padding-left:15px; }
+.timeline div { margin-bottom:8px; }
+.empty { text-align:center; padding:60px; color:#888; }
 </style>
 </head>
 <body>
-<nav class="nav">
+<nav>
   <a href="https://bta-group.hu/" target="_blank"><img src="https://bta-group.hu/wp-content/uploads/2025/04/logo-3.png" alt="BTA"></a>
   <a href="../personal/BTA_Personal_Dashboard.html">Personal</a>
-  <a href="MAD_Open_Topics_Dashboard.html" class="active">MAD Topics</a>
+  <a href="../mad/MAD_Open_Topics_Dashboard.html" class="active">MAD Topics</a>
+  <a href="../management/BTA_Management_Oversight.html">Management</a>
   <a href="../weekly/Weekly_Activity_Report_Dashboard.html">Weekly Activity</a>
   <a href="../weekly/Weekly_Market_Research_Dashboard.html">Market Research</a>
   <a href="../stakeholder/BTA_Stakeholder_Spider_Map.html">Stakeholders</a>
 </nav>
-<div class="container">
-  <header>
-    <h1>MAD Open Topics Dashboard</h1>
-    <div class="meta">Generated: 2026-11-17 09:05 Europe/Budapest · Based on snapshot 2026-11-17T06:42+01:00</div>
-  </header>
-  <div class="cards">
-    <div class="card">
-      <h2>TCS PMO training + capacity</h2>
-      <span class="status">ACTIVE</span>
-      <p>Training live since ~21 Oct (€14.5k / 12 pax / 4 weeks). Confirmed budget €14,022 for Balázs Stomp. Competency self-assessments and WO coverage ongoing.</p>
-      <div class="timeline">
-        <div class="tl-item"><strong>Last activity</strong> 2026-11-16 · Contacts: John Kallivayalil, Vibin V, Promodh R, Viktor Tápi, Balázs Stomp</div>
-      </div>
-      <div class="next"><strong>Next:</strong> Continue competency assessments and WO coverage.</div>
-    </div>
-    <!-- Additional cards truncated in this example for brevity; full content was written locally -->
+<header>
+  <h1>MAD Open Topics Dashboard</h1>
+  <p>Generated: 2026-11-18 09:05 Europe/Budapest</p>
+</header>
+<div class="card">
+  <h2>TCS PMO training + capacity <span class="status">ACTIVE</span></h2>
+  <p>Training live since ~21 Oct (€14.5k / 12 pax / 4 weeks). Confirmed budget €14,022 for Balázs Stomp. Competency self-assessments and WO coverage ongoing.</p>
+  <div class="timeline">
+    <div>📧 Mail: PMO Capacity + Support (John Kallivayalil / Robert Miskolczi) – expansion & training request</div>
+    <div>📧 Mail: TCS - BTA: UniCredit PMO training</div>
+    <div>📅 Calendar / Action: Ongoing training delivery</div>
   </div>
 </div>
+<div class="card">
+  <h2>ERSTE HU / MintConsulting FY27 contract <span class="status">ACTIVE</span></h2>
+  <p>Draft contract received for FY27 involving Balázs György. Róbert Hubai acknowledged and will review in a few days.</p>
+  <div class="timeline">
+    <div>📧 Mail: Re: ERSTE HU | MintConsulting_Balazs Gyorgy - contract FY27 (review in progress)</div>
+  </div>
+</div>
+<div class="card">
+  <h2>MKIK Közép-Európa 2027 munkaterv + Lublin <span class="status">ACTIVE</span></h2>
+  <p>Internal HI and KGSZB submissions completed. Lublin Three Seas Business Mission 25–27 Nov (MFA support received). Mikola + Antall confirmed support for company outreach.</p>
+  <div class="timeline">
+    <div>📧 Mail: FW: Támogatói állásfoglalás – MKIK lengyelországi... Lublin mission</div>
+    <div>📧 Mail: RE: Invitation for Hungarian companies – Business Mission to Lublin</div>
+    <div>📧 Mail: Re: KÉRÉS: bizottságok 2027. évi munkaterve</div>
+    <div>📅 Deadline: 2026-11-25 mission</div>
+  </div>
+</div>
+<div class="card">
+  <h2>Human Edge AI – Codebases partnership <span class="status">ACTIVE LEAD</span></h2>
+  <p>Inbound from Dialectica (Giorgos Fyltzanidis) after phone call. Valuation process for codebases (esp. COBOL priority). Non-binding metrics exchange, IP retained.</p>
+  <div class="timeline">
+    <div>📧 Mail: Human Edge AI - Codebases partnership (17 Nov, attachments: sizing sheet, sample license)</div>
+    <div>Action: Review offer / schedule follow-up if interested</div>
+  </div>
+</div>
+<div class="card">
+  <h2>TCS / UniCredit – Laszlo Szentgyorgyi PO <span class="status">ACTIVE</span></h2>
+  <p>PO2100079622 issued for Siron replacement. Feedback requested from TCS on PO and factory tagging. Daily rate EUR 400.</p>
+  <div class="timeline">
+    <div>📧 Mail: Re: New Colleague - Laszlo Szentgyorgyi (ongoing PO confirmation)</div>
+  </div>
+</div>
+<div class="card">
+  <h2>BTA Group und NSC (cold outreach) <span class="status">WATCH</span></h2>
+  <p>Heiko Hellstern (NSC Software) offering Vietnamese developers for flexible capacity. ISO certified, European timezone. Partnership pitch – no reply yet.</p>
+  <div class="timeline">
+    <div>📧 Mail: BTA Group und NSC (6 Nov)</div>
+  </div>
+</div>
+<div class="card">
+  <h2>Other snapshot actives (from shared extract) <span class="status">ACTIVE</span></h2>
+  <p>E.ON Mobile App RFI (BSALES-155), Senior .Net UniCredit/Bytesource (BSALES-160), PM Issuing & Acquiring (BSALES-157), SALIS/Alfa CoreWeb Q4, BSALES-138 RSAT, etc. See snapshot.json for full details. No new unread commercial requiring immediate action beyond above.</p>
+</div>
+<footer style="text-align:center; padding:30px; color:#666; font-size:0.85em;">
+  Configs: mad_classification_config.json (v1.0), dashboard_config.json (v1.3), snapshot.json (v1.1, 2026-11-18). Parent + sublabels (_MAD, _MAD/MKIK) searched. No new _MAD/* labels.
+</footer>
 </body>
 </html>
