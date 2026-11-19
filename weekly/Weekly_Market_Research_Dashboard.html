@@ -1,47 +1,206 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Weekly Market Research Dashboard</title>
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700&display=swap" rel="stylesheet">
-  <style>
-    :root { --bg:#0f1419; --card:#1a2332; --border:#2d3a4f; --text:#e7ecf3; --muted:#8b9bb4; --gold:#E2AD01; }
-    * { box-sizing:border-box; margin:0; padding:0; }
-    body { font-family:Montserrat,system-ui,sans-serif; background:var(--bg); color:var(--text); line-height:1.5; }
-    nav { background:var(--gold); padding:0.5rem 1.25rem; display:flex; align-items:center; gap:1rem; flex-wrap:wrap; }
-    nav img { height:36px; }
-    nav a { color:#1a1a1a; text-decoration:none; font-weight:600; font-size:0.9rem; padding:0.35rem 0.75rem; border-radius:999px; }
-    nav a.active { background:#1a1a1a; color:var(--gold); }
-    header { padding:1.5rem; text-align:center; }
-    header h1 { color:var(--gold); font-size:1.6rem; }
-    header .meta { color:var(--muted); font-size:0.85rem; margin-top:0.25rem; }
-    .container { max-width:1100px; margin:0 auto; padding:0 1.25rem 2rem; }
-    .card { background:var(--card); border:1px solid var(--border); border-radius:10px; padding:1.25rem; margin-bottom:1rem; }
-    .card h2 { font-size:1.15rem; margin-bottom:0.5rem; color:#fff; }
-    footer { text-align:center; padding:1.5rem; color:var(--muted); font-size:0.8rem; }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Weekly Market Research Dashboard – BTA Group</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --gold: #E2AD01;
+  --dark-bg: #0f1419;
+  --card-bg: #1a2332;
+  --card-border: #2d3a4d;
+  --text: #e8eef5;
+  --muted: #8b9bb4;
+  --accent: #E2AD01;
+  --active-bg: #1a1a1a;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: 'Montserrat', system-ui, -apple-system, sans-serif;
+  background: var(--dark-bg);
+  color: var(--text);
+  line-height: 1.55;
+  min-height: 100vh;
+}
+nav.top-nav {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: var(--gold);
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  padding: 0.65rem 1.5rem;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.25);
+}
+nav.top-nav .logo {
+  height: 36px;
+  display: block;
+}
+nav.top-nav .brand {
+  font-weight: 700;
+  color: #1a1a1a;
+  text-decoration: none;
+  font-size: 1.05rem;
+  margin-right: auto;
+}
+nav.top-nav a.nav-link {
+  color: #1a1a1a;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.88rem;
+  padding: 0.4rem 0.85rem;
+  border-radius: 999px;
+  transition: background 0.15s;
+}
+nav.top-nav a.nav-link:hover { background: rgba(0,0,0,0.08); }
+nav.top-nav a.nav-link.active {
+  background: var(--active-bg);
+  color: var(--gold);
+}
+main { max-width: 1200px; margin: 0 auto; padding: 1.75rem 1.25rem 3rem; }
+h1 { font-size: 1.75rem; font-weight: 700; margin-bottom: 0.35rem; }
+.subtitle { color: var(--muted); font-size: 0.92rem; margin-bottom: 1.75rem; }
+h2 { font-size: 1.35rem; font-weight: 700; margin: 2rem 0 1rem; color: var(--gold); }
+.opp-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+  gap: 1.1rem;
+}
+.card {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: 12px;
+  padding: 1.15rem 1.25rem;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.2);
+}
+.card h3 { font-size: 1.05rem; font-weight: 700; margin-bottom: 0.4rem; }
+.card .meta { font-size: 0.78rem; color: var(--gold); font-weight: 600; margin-bottom: 0.6rem; }
+.card p { font-size: 0.88rem; margin: 0.35rem 0; }
+.card strong { color: var(--gold); }
+.competitor-list { display: flex; flex-direction: column; gap: 0.9rem; }
+.comp-card { background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 10px; padding: 1rem 1.2rem; }
+.comp-card h4 { font-size: 1rem; margin-bottom: 0.4rem; }
+.summary-box {
+  background: linear-gradient(135deg, #1a2332 0%, #16202e 100%);
+  border: 1px solid var(--gold);
+  border-radius: 12px;
+  padding: 1.4rem 1.5rem;
+  margin-top: 1.5rem;
+}
+.summary-box p { margin: 0.5rem 0; font-size: 0.95rem; }
+footer { text-align: center; color: var(--muted); font-size: 0.78rem; margin-top: 2.5rem; }
+a.source { color: var(--muted); font-size: 0.78rem; word-break: break-all; }
+</style>
 </head>
 <body>
-  <nav>
-    <img src="https://bta-group.hu/wp-content/uploads/2025/04/logo-3.png" alt="BTA">
-    <a href="../personal/BTA_Personal_Dashboard.html">Personal</a>
-    <a href="../mad/MAD_Open_Topics_Dashboard.html">MAD Topics</a>
-    <a href="../management/BTA_Management_Oversight.html">Management</a>
-    <a href="Weekly_Activity_Report_Dashboard.html">Weekly Activity</a>
-    <a href="Weekly_Market_Research_Dashboard.html" class="active">Market Research</a>
-    <a href="../stakeholder/BTA_Stakeholder_Spider_Map.html">Stakeholders</a>
-  </nav>
-  <header>
-    <h1>Weekly Market Research</h1>
-    <div class="meta">Placeholder · Next Thursday automation will fill opportunities &amp; competitor analysis</div>
-  </header>
-  <div class="container">
+<nav class="top-nav">
+  <a href="https://bta-group.hu/" class="brand"><img src="https://bta-group.hu/wp-content/uploads/2025/04/logo-3.png" alt="BTA" class="logo"></a>
+  <a class="nav-link" href="../personal/BTA_Personal_Dashboard.html">Personal</a>
+  <a class="nav-link" href="../mad/MAD_Open_Topics_Dashboard.html">MAD Topics</a>
+  <a class="nav-link" href="Weekly_Activity_Report_Dashboard.html">Weekly Activity</a>
+  <a class="nav-link active" href="Weekly_Market_Research_Dashboard.html">Market Research</a>
+  <a class="nav-link" href="../stakeholder/BTA_Stakeholder_Spider_Map.html">Stakeholders</a>
+</nav>
+<main>
+  <h1>Weekly Market Research Report</h1>
+  <p class="subtitle">BTA Group · 19 November 2026 · Config: bta_market_research_config.json (loaded from Google Drive)</p>
+
+  <h2>Opportunities</h2>
+  <div class="opp-grid">
     <div class="card">
-      <h2>Opportunities &amp; Competitor Signals</h2>
-      <p style="color:var(--muted)">Seeded page. Weekly Market Research automation will overwrite with live web research.</p>
+      <h3>UniCredit</h3>
+      <div class="meta">CEE (Hungary) – Banking & Finance</div>
+      <p><strong>Opportunity:</strong> Senior AI Capability & Governance Lead (Budapest) still active. Establish AI principles, control framework, prompt standards and review of critical AI applications within Digital & Data. Broader group AI strategy on Google Cloud (Vertex/Gemini) and early digital-assets custody/brokerage exploration under MiCA.</p>
+      <p><strong>Contact:</strong> unicreditjob@unicreditgroup.hu</p>
+      <p><strong>Source:</strong> UniCredit careers / recent AI strategy coverage (Nov 2026)</p>
+    </div>
+    <div class="card">
+      <h3>Erste Group</h3>
+      <div class="meta">DACH/CEE – Banking & Finance</div>
+      <p><strong>Opportunity:</strong> AI Governance Advisor (Vienna) and KI-Governance-Spezialist (EBOe). Support Group AI Governance Framework, EU AI Act assessments, 2nd-line controls. Parallel Senior Risk Process & AI Transformation Lead (Poland) for process redesign + GenAI in risk.</p>
+      <p><strong>Contact:</strong> Erste careers / AI Office (Group AI Officer Clemens Dreihann-Holenia)</p>
+      <p><strong>Source:</strong> XING / LinkedIn (Oct–Nov 2026)</p>
+    </div>
+    <div class="card">
+      <h3>ÖBB</h3>
+      <div class="meta">DACH (Austria) – Rail / Transport</div>
+      <p><strong>Opportunity:</strong> Full SAP landscape renewal via RISE with SAP / Private Cloud. Concurrent IT Operating Model on ServiceNow (IT4IT), NIS2 readiness and security maturity model. Strong demand for BA, PM, data and compliance support around the transformation.</p>
+      <p><strong>Contact:</strong> ÖBB-BCC / Group CIO Martin Seiser</p>
+      <p><strong>Source:</strong> SAP / ÖBB announcements (Oct 2026)</p>
+    </div>
+    <div class="card">
+      <h3>MagNet Bank</h3>
+      <div class="meta">CEE (Hungary) – Banking & Finance</div>
+      <p><strong>Opportunity:</strong> Business Analyst (Budapest). Requirements gathering, process modelling, IT liaison for strategic initiatives. Continues broader IT governance / DORA / systems-analyst hiring pattern observed earlier in Q4.</p>
+      <p><strong>Contact:</strong> MagNet Bank careers / Profession.hu</p>
+      <p><strong>Source:</strong> Profession.hu (Oct 2026, still relevant)</p>
+    </div>
+    <div class="card">
+      <h3>Frankfurter Volksbank Rhein/Main</h3>
+      <div class="meta">DACH (Germany) – Banking & Finance</div>
+      <p><strong>Opportunity:</strong> Specialist ICT Third-Party Risk Management (DORA). Ownership of information register, contract review, exit strategies and 2nd-line TPRM for a major cooperative bank.</p>
+      <p><strong>Contact:</strong> Frankfurter Volksbank careers</p>
+      <p><strong>Source:</strong> Job posting (Nov 2026)</p>
+    </div>
+    <div class="card">
+      <h3>DACH Banks – DORA Freelances</h3>
+      <div class="meta">DACH (Germany/Austria) – Banking & Finance</div>
+      <p><strong>Opportunity:</strong> Multiple senior freelance mandates (Frankfurt, Stuttgart, remote-heavy): DORA Implementation Lead (ICT risk & TPRM), Senior Consultant IT-Security/Governance/Cyber Resilience (DORA/BAIT), MaRisk/DORA Payment specialist, Regulatory Assurance Lead. Hands-on remediation, registers, workshops.</p>
+      <p><strong>Contact:</strong> Via freelancermap / Thryve, Randstad, Contractor Consulting etc.</p>
+      <p><strong>Source:</strong> freelancermap (Nov 2026 postings)</p>
+    </div>
+    <div class="card">
+      <h3>Graphisoft</h3>
+      <div class="meta">CEE (Hungary) – Enterprise Software</div>
+      <p><strong>Opportunity:</strong> Agentic AI rollout inside Archicad 29/30 (AI Assistant, MCP beta, AI Spaces, Nemetschek Creator). Demand for AI governance, enablement, technical writing and delivery support around product and customer adoption of generative/agentic features.</p>
+      <p><strong>Contact:</strong> Graphisoft / Nemetschek</p>
+      <p><strong>Source:</strong> Graphisoft IGNITE 2026 / product announcements (Oct–Nov 2026)</p>
+    </div>
+    <div class="card">
+      <h3>DSK Bank</h3>
+      <div class="meta">CEE (Bulgaria) – Banking & Finance</div>
+      <p><strong>Opportunity:</strong> IT Business Analyst for new Core Banking System programme. Domain ownership (payments, lending, deposits etc.), functional specifications, process modelling and vendor training. Classic BA/PM staffing need in CEE core modernisation.</p>
+      <p><strong>Contact:</strong> DSK Bank careers</p>
+      <p><strong>Source:</strong> dev.bg (Nov 2026)</p>
+    </div>
+    <div class="card">
+      <h3>SBB</h3>
+      <div class="meta">DACH (Switzerland) – Rail / Transport</div>
+      <p><strong>Opportunity:</strong> Large-scale IT modernisation including Public/Sovereign Cloud, Private Cloud, data-centre and SAP services framework tenders (multi-year, high value). Parallel NIS2/security focus. Opens doors for BA, PM, testing and compliance capacity.</p>
+      <p><strong>Contact:</strong> SBB procurement / Simap</p>
+      <p><strong>Source:</strong> inside-it.ch (Nov 2026)</p>
     </div>
   </div>
-  <footer>BTA Dashboards · GitHub Pages · BTA-Group/bta-dashboards</footer>
+
+  <h2>Competitor Strategy Analysis</h2>
+  <div class="competitor-list">
+    <div class="comp-card">
+      <h4>GFT</h4>
+      <p>Dominant AI-centric banking story: Wynxx platform driving influenced revenue, Deutsche Bank Vault Core (Thought Machine) SI partner for German Private Bank, Itaú Batch2Cloud (up to 70% faster migrations), Anthropic Certified + OpenAI Select + Google Gemini FS launch partner. Recognised Industry Pioneer in AI Maturity Matrix. Implications: heavy competition on core modernisation and agentic AI delivery in DACH/CEE banks; BTA can differentiate on lighter-weight governance, BA and nearshore testing/staffing.</p>
+    </div>
+    <div class="comp-card">
+      <h4>Qualysoft</h4>
+      <p>Continuing banking nearshore focus (e.g. QA Automation Engineer Banking roles in Bucharest). Strong on test automation and application testing for regulated environments. Implications: direct overlap with BTA Software Testing and Engineering Delivery; emphasise Hungarian/DACH language + domain depth.</p>
+    </div>
+    <div class="comp-card">
+      <h4>Onespire / MINDSPIRE</h4>
+      <p>Known Thought Machine partner and SAP/data specialist expanding in DACH. Positions itself on core banking and data platforms. Implications: compete on SAP migration support, data engineering and AI governance around those platforms rather than pure SI scale.</p>
+    </div>
+    <div class="comp-card">
+      <h4>4iG / Mortoff</h4>
+      <p>4iG continues large-scale SAP FI/CO and public-sector/enterprise delivery; Mortoff remains a flexible local Hungarian competitor for BA/PM/testing. Implications: price and local relationship competition in HU banking and utilities; BTA’s multi-country DACH+CEE coverage and specialised AI/DORA offer a differentiator.</p>
+    </div>
+  </div>
+
+  <h2>Summary</h2>
+  <div class="summary-box">
+    <p>Demand remains concentrated on DORA/ICT third-party risk remediation (especially DACH freelances and cooperative banks), AI governance and capability building (UniCredit HU, Erste Group), and large SAP/cloud modernisations (ÖBB RISE Private Cloud, SBB). Graphisoft’s agentic AI push and CEE core-banking BA needs (MagNet, DSK) create additional BA, governance and enablement openings aligned with BTA services.</p>
+    <p>Competitor pressure is highest from GFT on AI-powered core modernisation and from Qualysoft/Onespire on testing and SAP/data nearshore. Lists and keywords were taken from bta_market_research_config.json (loaded from Google Drive). Static HTML overwritten at dashboards/weekly/Weekly_Market_Research_Dashboard.html. GitHub Pages push status will be reported after the publish step.</p>
+  </div>
+</main>
+<footer>BTA Group · Weekly Market Research · Generated 19 Nov 2026 · Sources: public job boards, company announcements, freelancermap</footer>
 </body>
 </html>
