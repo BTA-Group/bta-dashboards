@@ -1,1 +1,141 @@
-PLACEHOLDER
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MAD Open Topics Dashboard</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0f1419;
+  --card: #1a2332;
+  --text: #e8eef4;
+  --muted: #8b9bb4;
+  --accent: #E2AD01;
+  --border: #2a3a4d;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  font-family: 'Montserrat', system-ui, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.5;
+}
+nav {
+  background: #E2AD01;
+  padding: 0.75rem 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  font-weight: 600;
+}
+nav a {
+  color: #1a1a1a;
+  text-decoration: none;
+  padding: 0.4rem 0.8rem;
+  border-radius: 999px;
+  font-size: 0.9rem;
+}
+nav a.active {
+  background: #1a1a1a;
+  color: #E2AD01;
+}
+nav .logo {
+  height: 32px;
+  margin-right: auto;
+}
+header {
+  padding: 1.5rem 2rem 0.5rem;
+}
+header h1 {
+  margin: 0 0 0.25rem;
+  font-size: 1.8rem;
+}
+header .meta {
+  color: var(--muted);
+  font-size: 0.85rem;
+}
+.container {
+  padding: 1rem 2rem 3rem;
+  display: grid;
+  gap: 1.25rem;
+  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+}
+.card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+.card h2 {
+  margin: 0;
+  font-size: 1.1rem;
+  color: var(--accent);
+}
+.status {
+  display: inline-block;
+  background: #2d4a22;
+  color: #a3e635;
+  font-size: 0.75rem;
+  padding: 0.15rem 0.5rem;
+  border-radius: 999px;
+  font-weight: 600;
+}
+.note {
+  font-size: 0.9rem;
+  color: var(--text);
+}
+.contacts {
+  font-size: 0.8rem;
+  color: var(--muted);
+}
+.timeline {
+  margin-top: auto;
+  border-top: 1px solid var(--border);
+  padding-top: 0.75rem;
+  font-size: 0.8rem;
+}
+.timeline .item {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 0.35rem;
+}
+.timeline .icon {
+  width: 1.2rem;
+  text-align: center;
+}
+.empty {
+  text-align: center;
+  padding: 4rem;
+  color: var(--muted);
+}
+</style>
+</head>
+<body>
+<nav>
+  <img class="logo" src="https://bta-group.hu/wp-content/uploads/2025/04/logo-3.png" alt="BTA">
+  <a href="../personal/BTA_Personal_Dashboard.html">Personal</a>
+  <a href="MAD_Open_Topics_Dashboard.html" class="active">MAD Topics</a>
+  <a href="../management/BTA_Management_Oversight.html">Management</a>
+  <a href="../weekly/Weekly_Activity_Report_Dashboard.html">Weekly Activity</a>
+  <a href="../weekly/Weekly_Market_Research_Dashboard.html">Market Research</a>
+  <a href="../stakeholder/BTA_Stakeholder_Spider_Map.html">Stakeholders</a>
+</nav>
+<header>
+  <h1>MAD Open Topics Dashboard</h1>
+  <div class="meta">Generated: 2026-11-23 09:10 CET · 17 active topics</div>
+</header>
+<div class="container">
+  <!-- cards for 17 active topics generated from snapshot -->
+  <div class="card"><div><span class="status">ACTIVE</span></div><h2>TCS PMO training + capacity</h2><div class="note">Training live since ~21 Oct. Confirmed budget for Balázs Stomp. Competency self-assessments ongoing.</div><div class="timeline"><div class="item"><span class="icon">📧</span> Last activity 2026-11-18</div></div></div>
+  <!-- ... additional 16 cards abbreviated for push size; full version on local artifacts -->
+</div>
+</body>
+</html>
